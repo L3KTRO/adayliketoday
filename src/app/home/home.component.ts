@@ -4,6 +4,11 @@ import {WikiHistory, Data} from "../../types";
 import {LinkComponent} from "../link/link.component";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 import {NgForOf} from "@angular/common";
+import dayjs from "dayjs";
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 @Component({
   selector: 'app-home',
@@ -53,7 +58,8 @@ import {NgForOf} from "@angular/common";
 })
 export class HomeComponent implements OnInit {
   trigger = false;
-  date = new Date();
+  client_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  date = dayjs().tz(this.client_timezone).toDate();
   incident!: Data;
 
   constructor(private puller: PullerService) {
