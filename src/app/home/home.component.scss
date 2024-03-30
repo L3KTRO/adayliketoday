@@ -2,25 +2,11 @@ $first: rgb(3, 206, 164);
 $second: rgb(145, 46, 208);
 $third: rgb(255, 0, 113);
 
-@keyframes slideInFromUp {
-  0% {
-    transform: translateY(0);
-    opacity: 1;
-    //transform: translateY(-100%);
-    //opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: 1s ease-out 1s 1 slideInFromUp;
 }
 
 #title {
@@ -29,7 +15,7 @@ $third: rgb(255, 0, 113);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 1rem;
-
+  text-align: center;
 }
 
 #date {
@@ -53,14 +39,12 @@ $third: rgb(255, 0, 113);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: justify;
-  margin: 2rem 18rem;
-  animation: 1.5s ease-out 1s 1 slideInFromUp;
+  margin: 2rem 20%;
 }
 
 #refs {
   margin: 3rem 0 0 0;
   color: rgb(3, 206, 164);
-  animation: 1.75s ease-out 1s 1 slideInFromUp;
 }
 
 #links {
@@ -69,7 +53,6 @@ $third: rgb(255, 0, 113);
   margin: 2rem 20rem;
   flex-wrap: wrap;
   justify-content: space-between;
-  animation: 2s ease-out 1s 1 slideInFromUp;
 }
 
 #link {
@@ -83,4 +66,12 @@ $third: rgb(255, 0, 113);
 
 #links > #link {
   flex: 30%;
+}
+
+
+@media (max-width: 600px) {
+  #title {
+    font-size: 4rem;
+  }
+
 }
