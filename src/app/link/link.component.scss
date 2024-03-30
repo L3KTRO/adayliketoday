@@ -1,0 +1,9 @@
+@use "../home/home.component.scss" as home;
+
+a {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  color: home.$second;
+  margin: 0 1rem;
+}

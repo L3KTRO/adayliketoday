@@ -1,0 +1,30 @@
+name: Build and Publish Docker
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set repo name to lowercase
+        run: echo "REPO_NAME=$(echo ${{ github.repository }} | awk '{print tolower($0)}')" >> $GITHUB_ENV
+
+      - name: Docker Login
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PERSONAL_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ env.REPO_NAME }}:latest
+          dockerfile: Dockerfile
