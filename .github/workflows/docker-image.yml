@@ -40,3 +40,4 @@ jobs:
         with:
           url:  ${{ secrets.PORTAINER_UPDATE }}
           method: 'POST'
+          preventFailureOnNoResponse: "true"
