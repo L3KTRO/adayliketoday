@@ -16,7 +16,7 @@ jobs:
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
-        
+
       - name: Set repo name to lowercase
         run: echo "REPO_NAME=$(echo ${{ github.repository }} | awk '{print tolower($0)}')" >> $GITHUB_ENV
 
@@ -34,3 +34,9 @@ jobs:
           push: true
           tags: ghcr.io/${{ env.REPO_NAME }}:latest
           dockerfile: Dockerfile
+
+      - name: Update to portainer
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url:  ${{ secrets.PORTAINER_UPDATE }}
+          method: 'POST'
