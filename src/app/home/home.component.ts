@@ -84,7 +84,7 @@ export class HomeComponent implements OnInit {
   }
 
   formatDate() {
-    return `0${(this.date.getDate())}`.slice(-2) + " / " + ('0' + (this.date.getMonth() + 1)).slice(-2) + " / ";
+    return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth()) + " de ";
   }
 
 }
