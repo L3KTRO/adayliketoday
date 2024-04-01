@@ -1,6 +1,7 @@
-$first: rgb(3, 206, 164);
-$second: rgb(145, 46, 208);
-$third: rgb(255, 0, 113);
+$first: rgb(238, 206, 159);
+$second: rgb(221, 161, 94);
+$third: rgb(188, 108, 37);
+
 
 .container {
   display: flex;
@@ -11,6 +12,7 @@ $third: rgb(255, 0, 113);
 
 #title {
   font-size: 6rem;
+  font-family: "SF-Pro-Bold", sans-serif;
   background: linear-gradient(90deg, $first 0%, $second 50%, $third 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -21,16 +23,18 @@ $third: rgb(255, 0, 113);
 #date {
   display: flex;
   font-size: 2.5rem;
-  color: $first;
+  font-family: "SF-Pro-Bold", sans-serif;
+  color: $second;
   align-items: center;
 }
 
 #year {
+  font-family: "SF-Pro-Bold", sans-serif;
   margin: 0 1rem;
   display: flex;
-  font-size: 3.5rem;
+  font-size: 2.75rem;
   font-weight: 900;
-  color: $third;
+  color: $first;
 }
 
 #text {
@@ -43,8 +47,9 @@ $third: rgb(255, 0, 113);
 }
 
 #refs {
+  font-family: "SF-Pro-Bold", sans-serif;
   margin: 3rem 0 0 0;
-  color: rgb(3, 206, 164);
+  color: $second;
 }
 
 #links {

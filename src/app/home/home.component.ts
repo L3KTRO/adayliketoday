@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {PullerService} from "../puller.service";
-import {WikiHistory, Data} from "../../types";
 import {LinkComponent} from "../link/link.component";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 import {NgForOf} from "@angular/common";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import {eventResult} from "wikipedia";
+import {wikiSummary} from "wikipedia/dist/resultTypes";
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -25,12 +27,12 @@ dayjs.extend(timezone);
         query(
           '*',
           [
-            style({ opacity: 0, transform: 'translateY(-35px)' }),
+            style({opacity: 0, transform: 'translateY(-35px)'}),
             stagger(
               '100ms',
               animate(
                 '250ms ease-out',
-                style({ opacity: 1, transform: 'translateY(0px)' })
+                style({opacity: 1, transform: 'translateY(0px)'})
               )
             )
           ],
@@ -42,12 +44,12 @@ dayjs.extend(timezone);
         query(
           ':enter',
           [
-            style({ opacity: 0, transform: 'translateY(-35px)' }),
+            style({opacity: 0, transform: 'translateY(-35px)'}),
             stagger(
               '150ms',
               animate(
                 '250ms ease-out',
-                style({ opacity: 1, transform: 'translateY(0px)' })
+                style({opacity: 1, transform: 'translateY(0px)'})
               )
             )
           ],
@@ -60,7 +62,9 @@ export class HomeComponent implements OnInit {
   trigger = false;
   client_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   date = dayjs().tz(this.client_timezone).toDate();
-  incident!: Data;
+  text!: string;
+  references!: Array<wikiSummary>;
+  year!: number | undefined;
 
   constructor(private puller: PullerService) {
   }
@@ -70,29 +74,17 @@ export class HomeComponent implements OnInit {
   }
 
   getHistory() {
-    this.puller.get(`https://history.muffinlabs.com/date/${this.date.getMonth()+1}/${this.date.getDate()}`).subscribe(data => {
-      this.incident = this.getIncident(data);
-      this.trigger = !this.trigger;
-    });
-  }
-
-  getIncident(history: WikiHistory) {
-    let events = history.data.Events;
-    let births = history.data.Births;
-    let deaths = history.data.Deaths;
-
-    let incidents: Data[] = events.concat(births, deaths);
-
-    return incidents[0];
+    this.trigger = !this.trigger;
+    this.puller.getOnThisDateWithDate(this.date.getDate(), this.date.getMonth()+1).then((result: eventResult) => {
+      let event = result.events!![0]
+      this.text = event.text;
+      this.references = event.pages;
+      this.year = event.year;
+    })
   }
 
   formatDate() {
-    let formatted = this.date;
-    return formatted.getDate() + " / " + ('0' + (formatted.getMonth() + 1)).slice(-2) + " / ";
+    return `0${(this.date.getDate())}`.slice(-2) + " / " + ('0' + (this.date.getMonth() + 1)).slice(-2) + " / ";
   }
 
-  getYear() {
-    let formatted = new Date(this.incident?.year);
-    return formatted.getFullYear();
-  }
 }

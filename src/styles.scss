@@ -1,8 +1,22 @@
-$base: rgb(11, 16, 23);
+$base: rgb(14, 21, 30);
 
 html, body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "SF-Pro", sans-serif;
   background-color: $base;
 };
+
+@font-face {
+  font-family: 'SF-Pro-Bold';
+  src: url('assets/SF-Pro-Display-Bold.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SF-Pro';
+  src: url('assets/SF-Pro-Display-Regular.otf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}

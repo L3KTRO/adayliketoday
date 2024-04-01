@@ -1,12 +1,11 @@
 <div class="container" [@listStagger]="trigger ? 'in' : 'out'">
-  <h1 id="title">Un día cualquiera...</h1>
-  <h1 id="date">{{ formatDate() }} <span id="year">{{ getYear() }}</span></h1>
-  <h1 id="text">{{ incident?.text }}</h1>
-
+  <h1 id="title">Un día como hoy...</h1>
+  <h1 id="date">{{formatDate()}}<span id="year">{{year}}</span></h1>
+  <h1 id="text">{{ text }}</h1>
   <h1 id="refs">References</h1>
   <div id="links">
-    <div id="link" *ngFor="let link of incident?.links">
-      <reference-link [url]="link.link" [description]="link.title"></reference-link>
+    <div id="link" *ngFor="let link of references">
+      <reference-link [link]="link"></reference-link>
     </div>
   </div>
 </div>

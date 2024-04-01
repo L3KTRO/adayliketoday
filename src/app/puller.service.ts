@@ -1,15 +1,18 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {WikiHistory} from "../types";
+import wiki from "wikipedia";
 
 @Injectable({
   providedIn: 'root'
 })
 export class PullerService {
-  constructor(private http: HttpClient) {
+
+  async getOnThisDate() {
+    wiki.setLang('es');
+    return await wiki.onThisDay();
   }
 
-  get(url: string) {
-    return this.http.get<WikiHistory>(url);
+  async getOnThisDateWithDate(day: number, month: number) {
+    wiki.setLang('es');
+    return await wiki.onThisDay({month: month.toString(), day: day.toString()});
   }
 }

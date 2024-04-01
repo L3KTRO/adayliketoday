@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {wikiSummary} from "wikipedia/dist/resultTypes";
 
 @Component({
   selector: 'reference-link',
@@ -8,6 +9,5 @@ import {Component, Input} from '@angular/core';
   styleUrl: './link.component.scss'
 })
 export class LinkComponent {
-  @Input() url!: string;
-  @Input() description!: string;
+  @Input() link!: wikiSummary;
 }
