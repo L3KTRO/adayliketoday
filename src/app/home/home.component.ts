@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit {
     this.trigger = !this.trigger;
     this.puller.getOnThisDateWithDate(this.date.getDate(), this.date.getMonth()+1).then((result: eventResult) => {
       let event = result.events!![0]
-      this.text = event.text;
+      this.text = event.text.charAt(0).toUpperCase() + event.text.slice(1);
       this.references = event.pages;
       this.year = event.year;
     })
