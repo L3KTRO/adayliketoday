@@ -1,5 +1,11 @@
 <div class="container" [@listStagger]="trigger ? 'in' : 'out'">
   <h1 id="title">Un día como hoy...</h1>
+  <div id="year-controller">
+    <button id="year-older">Older</button>
+    <button id="year-prev">Prev</button>
+    <button id="year-next">Next</button>
+    <button id="year-newest">Older</button>
+  </div>
   <h1 id="date">{{formatDate()}}<span id="year">{{year}}</span></h1>
   <h1 id="text">{{ text }}</h1>
   <h1 id="refs">Referencias</h1>
