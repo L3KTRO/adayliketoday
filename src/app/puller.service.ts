@@ -1,19 +1,25 @@
 import {Injectable} from '@angular/core';
-import wiki from "wikipedia";
+import wiki, { eventResult } from "wikipedia";
+import { BranchService } from './branch.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PullerService {
+  items!: eventResult;
+  events!: BranchService;
+  births!: BranchService;
+  deaths!: BranchService;
+  branches: [BranchService, BranchService, BranchService] = [this.events, this.births, this.deaths];
 
-  async getOnThisDate() {
+  async prepareItems(day: number | undefined, month: number | undefined) {
     wiki.setLang('es');
-    return await wiki.onThisDay();
-  }
-
-  async getOnThisDateWithDate(day: number, month: number) {
-    wiki.setLang('es');
-    return await wiki.onThisDay({month: month.toString(), day: day.toString()});
+    let items = (!day || !month) ? await wiki.onThisDay() : await wiki.onThisDay({month: month.toString(), day: day.toString()});
+    this.events = new BranchService(items.events!!);
+    this.births = new BranchService(items.births!!);
+    this.deaths = new BranchService(items.deaths!!);
+    
+    return true;
   }
 
   getWritedMonth(month: number) : string {

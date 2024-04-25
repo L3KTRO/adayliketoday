@@ -65,22 +65,29 @@ export class HomeComponent implements OnInit {
   text!: string;
   references!: Array<wikiSummary>;
   year!: number | undefined;
+  items!: eventResult;
 
   constructor(private puller: PullerService) {
   }
 
   ngOnInit() {
-    this.getHistory()
+    this.getItems()
   }
 
-  getHistory() {
-    this.trigger = !this.trigger;
-    this.puller.getOnThisDateWithDate(this.date.getDate(), this.date.getMonth()+1).then((result: eventResult) => {
-      let event = result.events!![0]
-      this.text = event.text.charAt(0).toUpperCase() + event.text.slice(1);
-      this.references = event.pages;
-      this.year = event.year;
-    })
+  getItem(indexMod: number){
+
+  }
+
+  getInitialItem(){
+    let item = this.items.events!![0];
+    this.text = item.text.charAt(0).toUpperCase() + item.text.slice(1);
+    this.references = item.pages;
+    this.year = item.year;
+    this.trigger = true
+  }
+
+  getItems() {
+    this.puller.prepareItems(this.date.getDate(), this.date.getMonth()+1)
   }
 
   formatDate() {
