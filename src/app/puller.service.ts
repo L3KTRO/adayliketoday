@@ -1,29 +1,25 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import wiki, { eventResult } from "wikipedia";
-import { BranchService } from './branch.service';
+import { Branch } from './branch';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PullerService {
-  items!: eventResult;
-  events!: BranchService;
-  births!: BranchService;
-  deaths!: BranchService;
-  branches: [BranchService, BranchService, BranchService] = [this.events, this.births, this.deaths];
 
-  async prepareItems(day: number | undefined, month: number | undefined) {
+  async prepareItems(day: number | undefined, month: number | undefined) : Promise<[Branch, Branch, Branch]>{
     wiki.setLang('es');
-    let items = (!day || !month) ? await wiki.onThisDay() : await wiki.onThisDay({month: month.toString(), day: day.toString()});
-    this.events = new BranchService(items.events!!);
-    this.births = new BranchService(items.births!!);
-    this.deaths = new BranchService(items.deaths!!);
-    
-    return true;
+    let items = (!day || !month) ? await wiki.onThisDay() : await wiki.onThisDay({ month: month.toString(), day: day.toString() });
+    return [
+      new Branch(items.events),
+      new Branch(items.births),
+      new Branch(items.deaths)
+    ];;
   }
 
-  getWritedMonth(month: number) : string {
-    switch((month+1)) {
+
+  getWritedMonth(month: number): string {
+    switch ((month + 1)) {
       case 1:
         return 'Enero';
       case 2:
