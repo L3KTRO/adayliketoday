@@ -6,5 +6,7 @@ ROADMAP TO v0.1
 
 - [x] Cambiar formato de fecha de 'dd/mm/yyyy' a 'dd de MM de yyyy'
 - [x] Enlaces se abren en nueva pestaña
-- [ ] Añadir acontecimiento, nacimiento y fallecimiento del dia
-- [ ] Añadir carrusel para ver todos los acontecimientos/nacimientos/fallecimientos del dia
+- [X] Añadir acontecimiento, nacimiento y fallecimiento del dia
+- [X] Añadir carrusel para ver todos los acontecimientos/nacimientos/fallecimientos del dia
+- [ ] Cambiar colores segun acontecimiento
+- [ ] Refactorización (tipos, etc.)
