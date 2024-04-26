@@ -5,6 +5,9 @@ html, body {
   padding: 0;
   font-family: "SF-Pro", sans-serif;
   background-color: $base;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  overflow: hidden;
 };
 
 @font-face {

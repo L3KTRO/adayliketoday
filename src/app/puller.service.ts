@@ -7,14 +7,14 @@ import { Branch } from './branch';
 })
 export class PullerService {
 
-  async prepareItems(day: number | undefined, month: number | undefined) : Promise<[Branch, Branch, Branch]>{
+  async prepareItems(day: number | undefined, month: number | undefined): Promise<[Branch, Branch, Branch]> {
     wiki.setLang('es');
     let items = (!day || !month) ? await wiki.onThisDay() : await wiki.onThisDay({ month: month.toString(), day: day.toString() });
     return [
       new Branch(items.events),
       new Branch(items.births),
       new Branch(items.deaths)
-    ];;
+    ];
   }
 
 

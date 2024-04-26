@@ -1,5 +1,10 @@
 @use "../home/home.component.scss" as home;
 
+html, body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 a {
   display: flex;
   justify-content: space-between;

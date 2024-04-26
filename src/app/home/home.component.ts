@@ -8,6 +8,8 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { Branch } from "../branch";
 import { wikiSummary } from "wikipedia/dist/resultTypes";
+import { ItemComponent } from '../item/item.component';
+import { timeout } from 'rxjs';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -17,7 +19,8 @@ dayjs.extend(timezone);
   standalone: true,
   imports: [
     LinkComponent,
-    NgForOf
+    NgForOf,
+    ItemComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -39,22 +42,37 @@ dayjs.extend(timezone);
         )
       ])
     ]),
-    trigger('listLinksStagger', [
-      transition('* <=> *', [
-        query(
-          ':enter',
-          [
-            style({ opacity: 0, transform: 'translateY(-35px)' }),
-            stagger(
-              '150ms',
-              animate(
-                '250ms ease-out',
-                style({ opacity: 1, transform: 'translateY(0px)' })
-              )
-            )
-          ],
+    trigger('dataChange', [
+      transition('entering => done', [
+        style({ opacity: 0, transform: 'translateY(-30px)' }),
+        animate(
+          '300ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0px)' })
         )
-      ])
+      ]),
+      transition('done => entering', [
+        style({ opacity: 1, transform: 'translateY(0px)' }),
+        animate(
+          '300ms ease-out',
+          style({ opacity: 0, transform: 'translateY(30px)' }),
+        )
+      ]),
+    ]),
+    trigger('branchChange', [
+      transition('entering => done', [
+        style({ opacity: 0, transform: 'translateX(-30px)' }),
+        animate(
+          '300ms ease-out',
+          style({ opacity: 1, transform: 'translateX(0px)' })
+        )
+      ]),
+      transition('done => entering', [
+        style({ opacity: 1, transform: 'translateX(0px)' }),
+        animate(
+          '300ms ease-out',
+          style({ opacity: 0, transform: 'translateX(30px)' }),
+        )
+      ]),
     ])
   ]
 })
@@ -68,50 +86,66 @@ export class HomeComponent implements OnInit {
   branches!: [Branch, Branch, Branch];
   indexBranch = 0;
   selectedBranch!: Branch;
+  dataState: 'entering' | 'done' = 'done';
+  dataStateYear: 'entering' | 'done' = 'done';
+  branchChange: 'entering' | 'done' = 'done';
+  refreshing = false;
 
   constructor(private puller: PullerService) { }
 
-  ngOnInit() {
-    this.puller.prepareItems(this.date.getDate(), this.date.getMonth() + 1).then((branches) => {
-      this.branches = branches;
-      this.initialization();
-      this.refresh();
-    })
+  async ngOnInit() {
+    let branches = await this.puller.prepareItems(this.date.getDate(), this.date.getMonth() + 1);
+    this.branches = branches;
+    await this.initialization();
+    await this.refresh();
   }
 
-  refresh() {
-    this.trigger = false;
-    let item = this.selectedBranch.get();
-    this.text = item.text;
-    this.references = item.pages;
-    this.year = item.year;
+  async refresh(animate = true) {
+    if (this.refreshing) return;
+    this.refreshing = true;
+
+    if (animate == false) this.branchChange = 'entering';
+    else {
+      this.dataState = 'entering';
+      this.dataStateYear = 'entering';
+    }
+
+    setTimeout(() => {
+      this.trigger = false;
+      let item = this.selectedBranch.get();
+      this.text = item.text.charAt(0).toUpperCase() + item.text.slice(1);
+      this.references = item.pages;
+      this.year = item.year;
+      this.refreshing = false;
+    }, 300);
   }
 
-  next() {
+  async next() {
     this.selectedBranch.next();
-    this.refresh();
+    await this.refresh();
   }
 
-  prev() {
+  async prev() {
     this.selectedBranch.prev();
-    this.refresh();
+    await this.refresh();
   }
 
-  oldest() {
+  async oldest() {
     this.selectedBranch.oldest();
-    this.refresh();
+    await this.refresh();
   }
 
-  newest() {
+  async newest() {
     this.selectedBranch.newest();
-    this.refresh();
+    await this.refresh();
   }
 
-  initialization() {
+  async initialization() {
     this.selectedBranch = this.branches[0];
   }
 
-  checkBranch() {
+  async checkBranch() {
+    this.branchChange = 'entering';
     if (this.indexBranch < 0) {
       this.indexBranch = 2;
     } else if (this.indexBranch > 2) {
@@ -119,18 +153,18 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  nextBranch() {
+  async nextBranch() {
     this.indexBranch = this.indexBranch + 1;
-    this.checkBranch()
+    await this.checkBranch()
     this.selectedBranch = this.branches[this.indexBranch];
-    this.refresh();
+    await this.refresh(false);
   }
 
-  prevBranch() {
+  async prevBranch() {
     this.indexBranch = this.indexBranch - 1;
-    this.checkBranch()
+    await this.checkBranch()
     this.selectedBranch = this.branches[this.indexBranch];
-    this.refresh();
+    await this.refresh(false);
   }
 
   formatDate() {
