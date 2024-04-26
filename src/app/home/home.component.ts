@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PullerService } from "../puller.service";
 import { LinkComponent } from "../link/link.component";
 import { animate, query, stagger, style, transition, trigger } from "@angular/animations";
-import { NgClass, NgForOf } from "@angular/common";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -11,6 +11,8 @@ import { wikiSummary } from "wikipedia/dist/resultTypes";
 import { ItemComponent } from '../item/item.component';
 import { getColorByBranch } from '../../main';
 import { blockOverflow, unblockOverflow } from '../../main';
+
+const transitionTime = 300;
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -22,7 +24,8 @@ dayjs.extend(timezone);
     LinkComponent,
     ItemComponent,
     NgForOf,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -48,14 +51,14 @@ dayjs.extend(timezone);
       transition('entering => done', [
         style({ opacity: 0, transform: 'translateY(-30px)' }),
         animate(
-          '300ms ease-out',
+          `${transitionTime}ms ease-out`,
           style({ opacity: 1, transform: 'translateY(0px)' })
         )
       ]),
       transition('done => entering', [
         style({ opacity: 1, transform: 'translateY(0px)' }),
         animate(
-          '300ms ease-out',
+          `${transitionTime}ms ease-out`,
           style({ opacity: 0, transform: 'translateY(30px)' }),
         )
       ]),
@@ -64,14 +67,14 @@ dayjs.extend(timezone);
       transition('entering => done', [
         style({ opacity: 0, transform: 'translateX(-30px)' }),
         animate(
-          '300ms ease-out',
+          `${transitionTime}ms ease-out`,
           style({ opacity: 1, transform: 'translateX(0px)' })
         )
       ]),
       transition('done => entering', [
         style({ opacity: 1, transform: 'translateX(0px)' }),
         animate(
-          '300ms ease-out',
+          `${transitionTime}ms ease-out`,
           style({ opacity: 0, transform: 'translateX(30px)' }),
         )
       ]),
@@ -104,10 +107,9 @@ export class HomeComponent implements OnInit {
     let branches = await this.puller.prepareItems(this.date.getDate(), this.date.getMonth() + 1);
     this.branches = branches;
     await this.initialization();
-    await this.refresh();
   }
 
-  async refresh(animate = true) {
+  async refresh(animate = true, indexBranchChecked: number = this.indexBranch) {
     if (this.refreshing) return;
     this.refreshing = true;
     blockOverflow();
@@ -119,7 +121,8 @@ export class HomeComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.trigger = false;
+      this.indexBranch = indexBranchChecked;
+      this.selectedBranch = this.branches[this.indexBranch];
       let item = this.selectedBranch.get();
       this.concept = this.selectedBranch.concept;
       this.text = item.text.charAt(0).toUpperCase() + item.text.slice(1);
@@ -127,7 +130,7 @@ export class HomeComponent implements OnInit {
       this.year = item.year;
       this.refreshing = false;
       unblockOverflow();
-    }, 300);
+    }, transitionTime);
   }
 
   async next() {
@@ -152,29 +155,28 @@ export class HomeComponent implements OnInit {
 
   async initialization() {
     this.selectedBranch = this.branches[0];
+    await this.refresh();
   }
 
-  async checkBranch() {
+  async checkBranch(mod: number) {
     this.branchChange = 'entering';
-    if (this.indexBranch < 0) {
-      this.indexBranch = 2;
-    } else if (this.indexBranch > 2) {
-      this.indexBranch = 0;
+    if (this.indexBranch+mod < 0) {
+      return 2;
+    } else if (this.indexBranch+mod > 2) {
+      return 0;
+    } else {
+      return this.indexBranch+mod;
     }
   }
 
   async nextBranch() {
-    this.indexBranch = this.indexBranch + 1;
-    await this.checkBranch()
-    this.selectedBranch = this.branches[this.indexBranch];
-    await this.refresh(false);
+    let indexBranchChecked = await this.checkBranch(+1)
+    await this.refresh(false, indexBranchChecked);
   }
 
   async prevBranch() {
-    this.indexBranch = this.indexBranch - 1;
-    await this.checkBranch()
-    this.selectedBranch = this.branches[this.indexBranch];
-    await this.refresh(false);
+    let indexBranchChecked = await this.checkBranch(+1)
+    await this.refresh(false, indexBranchChecked);
   }
 
   formatDate() {

@@ -1,4 +1,4 @@
-<div class="container" [@listStagger]>
+<div class="container" [@listStagger] *ngIf="branches">
   <h1 id="title">Un día como hoy...</h1>
   <div id="year-controller">
     <button id="year-older" (click)="oldest()">Oldest</button>
