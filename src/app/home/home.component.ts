@@ -10,6 +10,7 @@ import { Branch } from "../branch";
 import { wikiSummary } from "wikipedia/dist/resultTypes";
 import { ItemComponent } from '../item/item.component';
 import { timeout } from 'rxjs';
+import { blockOverflow, unblockOverflow } from '../../main';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -80,6 +81,7 @@ export class HomeComponent implements OnInit {
   trigger = false;
   client_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   date = dayjs().tz(this.client_timezone).toDate();
+  concept!: string;
   text!: string;
   references!: Array<wikiSummary>;
   year!: number | undefined;
@@ -103,6 +105,7 @@ export class HomeComponent implements OnInit {
   async refresh(animate = true) {
     if (this.refreshing) return;
     this.refreshing = true;
+    blockOverflow();
 
     if (animate == false) this.branchChange = 'entering';
     else {
@@ -113,10 +116,12 @@ export class HomeComponent implements OnInit {
     setTimeout(() => {
       this.trigger = false;
       let item = this.selectedBranch.get();
+      this.concept = this.selectedBranch.concept;
       this.text = item.text.charAt(0).toUpperCase() + item.text.slice(1);
       this.references = item.pages;
       this.year = item.year;
       this.refreshing = false;
+      unblockOverflow();
     }, 300);
   }
 

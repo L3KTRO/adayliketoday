@@ -5,3 +5,12 @@ import { AppComponent } from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
+
+
+export function blockOverflow(){
+  document.body.style.overflow = 'hidden';
+}
+
+export function unblockOverflow(){
+  document.body.style.overflow = 'auto';
+}

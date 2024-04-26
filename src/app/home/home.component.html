@@ -13,6 +13,7 @@
   <div class="container" [@branchChange]="branchChange" (@branchChange.done)="branchChange = 'done'">
     <h1 id="date">{{ formatDate() }}<span id="year" [@dataChange]="dataStateYear"
         (@dataChange.done)="dataStateYear = 'done'">{{year}}</span></h1>
+    <h1 id="concept"> {{concept}} </h1>
     <history-item [text]="text" [references]="references" [@dataChange]="dataState"
       (@dataChange.done)="dataState = 'done'"></history-item>
   </div>

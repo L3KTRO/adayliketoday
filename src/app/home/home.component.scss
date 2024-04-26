@@ -1,6 +1,18 @@
-$first: rgb(238, 206, 159);
-$second: rgb(221, 161, 94);
-$third: rgb(188, 108, 37);
+$first_general: rgb(159, 171, 238);
+$second_general: rgb(94, 160, 221);
+$third_general: rgb(37, 90, 188);
+
+$first_event: rgb(238, 206, 159);
+$second_event: rgb(221, 161, 94);
+$third_event: rgb(188, 108, 37);
+
+$first_birth: rgb(238, 159, 225);
+$second_birth: rgb(217, 94, 225);
+$third_birth: rgb(188, 37, 180);
+
+$first_death: rgb(196, 159, 238);
+$second_death: rgb(155, 94, 225);
+$third_death: rgb(120, 37, 188);
 
 body {
   overflow-x: hidden;
@@ -14,33 +26,76 @@ body {
   justify-content: center;
 }
 
+.degrate-event {
+  background: linear-gradient(140deg, $third_event 0%, $second_event 50%, $first_event 100%);
+}
+
+.degrate-birth {
+  background: linear-gradient(140deg, $third_birth 0%, $second_birth 50%, $first_birth 100%);
+}
+
+.degrate-death {
+  background: linear-gradient(140deg, $third_death 0%, $second_death 50%, $first_death 100%);
+}
+
+.color-first-event {
+  color: $first_event;
+}
+
+.color-second-event {
+  color: $second_event;
+}
+
+.color-first-birth {
+  color: $first_birth;
+}
+
+.color-second-birth {
+  color: $second_birth;
+}
+
+.color-first-death {
+  color: $first_death;
+}
+
+.color-second-death {
+  color: $second_death;
+}
+
 #title {
-  font-size: 6rem;
+  font-size: 7rem;
   font-family: "SF-Pro-Bold", sans-serif;
-  background: linear-gradient(90deg, $first 0%, $second 50%, $third 100%);
+  background: linear-gradient(90deg, $first_general 0%, $second_general 50%, $third_general 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 1rem;
+  margin: 2rem;
   text-align: center;
+}
+
+#concept {
+  display: flex;
+  font-size: 2rem;
+  font-family: "SF-Pro-Bold", sans-serif;
+  color: $third_event;
+  align-items: center;
 }
 
 #date {
   display: flex;
   font-size: 2.5rem;
   font-family: "SF-Pro-Bold", sans-serif;
-  color: $second;
+  color: $second_event;
   align-items: center;
 }
 
 #year {
   margin: 0 0.5rem;
-  color: $first;
+  color: $first_event;
 }
 
 @media (max-width: 600px) {
   #title {
     font-size: 4rem;
   }
-
 }

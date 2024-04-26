@@ -12,7 +12,7 @@ body {
 
 #text {
     font-size: 2rem;
-    background: linear-gradient(140deg, home.$third 0%, home.$second 50%, home.$first 100%);
+    background: linear-gradient(140deg, home.$third_event 0%, home.$second_event 50%, home.$first_event 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -23,7 +23,7 @@ body {
 #refs {
     font-family: "SF-Pro-Bold", sans-serif;
     margin: 3rem 0 0 0;
-    color: home.$second;
+    color: home.$second_event;
 }
 
 #links {
@@ -39,7 +39,7 @@ body {
     justify-content: center;
     font-size: 1.5rem;
     text-decoration: none;
-    color: home.$second;
+    color: home.$second_event;
     margin: 0 1rem;
 }
 

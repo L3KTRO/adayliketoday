@@ -11,9 +11,9 @@ export class PullerService {
     wiki.setLang('es');
     let items = (!day || !month) ? await wiki.onThisDay() : await wiki.onThisDay({ month: month.toString(), day: day.toString() });
     return [
-      new Branch(items.events),
-      new Branch(items.births),
-      new Branch(items.deaths)
+      new Branch("Hecho histórico", items.events),
+      new Branch("Nacimiento", items.births),
+      new Branch("Fallecimiento", items.deaths)
     ];
   }
 

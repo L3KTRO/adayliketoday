@@ -1,13 +1,16 @@
 import { wikiSummary } from "wikipedia";
 
 export class Branch {
+  public readonly concept!: string;
   index = 0;
   data!: itemData[];
 
-  constructor(data: itemData[] | undefined) {
+  constructor(concept: string, data: itemData[] | undefined) {
     if (data) {
       this.data = data.filter((branch) => branch.year != undefined);
     }
+
+    this.concept = concept;
   }
 
   get() {
