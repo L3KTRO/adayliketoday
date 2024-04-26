@@ -8,5 +8,5 @@ ROADMAP TO v0.1
 - [x] Enlaces se abren en nueva pestaña
 - [X] Añadir acontecimiento, nacimiento y fallecimiento del dia
 - [X] Añadir carrusel para ver todos los acontecimientos/nacimientos/fallecimientos del dia
-- [ ] Cambiar colores segun acontecimiento
+- [X] Cambiar colores segun acontecimiento; [ ] Retoque: esperar a la transicion para cambiar el color
 - [ ] Refactorización (tipos, etc.)

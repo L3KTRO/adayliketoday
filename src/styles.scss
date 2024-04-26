@@ -1,5 +1,21 @@
 $base: rgb(14, 21, 30);
 
+$first_general: #9fabee;
+$second_general: #5ea0dd;
+$third_general: #255abc;
+
+$first_event: #eece9f;
+$second_event: #dda15e;
+$third_event: #bc6c25;
+
+$first_birth: #ee9fe1;
+$second_birth: #d95ee1;
+$third_birth: #bc25b4;
+
+$first_death: #c49fee;
+$second_death: #9b5ee1;
+$third_death: #7825bc;
+
 html, body {
   margin: 0;
   padding: 0;
@@ -20,4 +36,68 @@ html, body {
   src: url('assets/SF-Pro-Display-Regular.otf') format('truetype');
   font-weight: bold;
   font-style: normal;
+}
+
+.gradient-general {
+    background: linear-gradient(90deg, $first_general 0%, $second_general 50%, $third_general 100%);
+}
+
+.gradient-event {
+    background: linear-gradient(90deg, $first_event 0%, $second_event 50%, $third_event 100%);
+}
+
+.gradient-birth {
+    background: linear-gradient(90deg, $first_birth 0%, $second_birth 50%, $third_birth 100%);
+}
+
+.gradient-death {
+    background: linear-gradient(90deg, $first_death 0%, $second_death 50%, $third_death 100%);
+}
+
+.first-general {
+    color: $first_general;
+}
+
+.second-general {
+    color: $second_general;
+}
+
+.third-general {
+    color: $third_general;
+}
+
+.first-event {
+    color: $first_event;
+}
+
+.second-event {
+    color: $second_event;
+}
+
+.third-event {
+    color: $third_event;
+}
+
+.first-birth {
+    color: $first_birth;
+}
+
+.second-birth {
+    color: $second_birth;
+}
+
+.third-birth {
+    color: $third_birth;
+}
+
+.first-death {
+    color: $first_death;
+}
+
+.second-death {
+    color: $second_death;
+}
+
+.third-death {
+    color: $third_death;
 }

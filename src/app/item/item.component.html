@@ -1,9 +1,9 @@
 <div class="container">
-    <h1 id="text">{{ text }}</h1>
-    <h1 id="refs">Referencias</h1>
+    <h1 id="text" [ngClass]='getColorByBranch(indexBranch).gradient'>{{ text }}</h1>
+    <h1 id="refs" [ngClass]='getColorByBranch(indexBranch).second'>Referencias</h1>
     <div id="links">
-        <div id="link" *ngFor="let link of references">
-            <reference-link [link]="link"></reference-link>
+        <div id="link" [ngClass]='getColorByBranch(indexBranch).second'  *ngFor="let link of references">
+            <reference-link [link]="link" [indexBranch]="indexBranch"></reference-link>
         </div>
     </div>
 </div>

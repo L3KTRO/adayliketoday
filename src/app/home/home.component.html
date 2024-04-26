@@ -11,10 +11,11 @@
     <button id="branch-next" (click)="nextBranch()">Branch Next</button>
   </div>
   <div class="container" [@branchChange]="branchChange" (@branchChange.done)="branchChange = 'done'">
-    <h1 id="date">{{ formatDate() }}<span id="year" [@dataChange]="dataStateYear"
+    <h1 id="date" [ngClass]="getColorByBranch(indexBranch).second">{{ formatDate() }}<span id="year"
+        [ngClass]="getColorByBranch(indexBranch).first" [@dataChange]="dataStateYear"
         (@dataChange.done)="dataStateYear = 'done'">{{year}}</span></h1>
-    <h1 id="concept"> {{concept}} </h1>
-    <history-item [text]="text" [references]="references" [@dataChange]="dataState"
+    <h1 id="concept" [ngClass]="getColorByBranch(indexBranch).third"> {{concept}} </h1>
+    <history-item [text]="text" [references]="references" [indexBranch]="indexBranch" [@dataChange]="dataState"
       (@dataChange.done)="dataState = 'done'"></history-item>
   </div>
 </div>

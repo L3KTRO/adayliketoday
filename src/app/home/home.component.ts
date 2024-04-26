@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { PullerService } from "../puller.service";
 import { LinkComponent } from "../link/link.component";
 import { animate, query, stagger, style, transition, trigger } from "@angular/animations";
-import { NgForOf } from "@angular/common";
+import { NgClass, NgForOf } from "@angular/common";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { Branch } from "../branch";
 import { wikiSummary } from "wikipedia/dist/resultTypes";
 import { ItemComponent } from '../item/item.component';
-import { timeout } from 'rxjs';
+import { getColorByBranch } from '../../main';
 import { blockOverflow, unblockOverflow } from '../../main';
 
 dayjs.extend(utc);
@@ -20,8 +20,9 @@ dayjs.extend(timezone);
   standalone: true,
   imports: [
     LinkComponent,
+    ItemComponent,
     NgForOf,
-    ItemComponent
+    NgClass
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -94,6 +95,10 @@ export class HomeComponent implements OnInit {
   refreshing = false;
 
   constructor(private puller: PullerService) { }
+
+  getColorByBranch(branchIndex: number) {
+    return getColorByBranch(branchIndex);
+  }
 
   async ngOnInit() {
     let branches = await this.puller.prepareItems(this.date.getDate(), this.date.getMonth() + 1);

@@ -1,5 +1,5 @@
 <h2>
-  <a id="linking" href="{{ link.content_urls.desktop.page }}" target="_blank">
+  <a [ngClass]='getColorByBranch(indexBranch).third' id="linking" href="{{ link.content_urls.desktop.page }}" target="_blank">
     {{link.titles.normalized}}
   </a>
 </h2>
