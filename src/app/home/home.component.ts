@@ -175,7 +175,7 @@ export class HomeComponent implements OnInit {
   }
 
   async prevBranch() {
-    let indexBranchChecked = await this.checkBranch(+1)
+    let indexBranchChecked = await this.checkBranch(-1)
     await this.refresh(false, indexBranchChecked);
   }
 
