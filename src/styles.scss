@@ -8,13 +8,13 @@ $first_event: #eece9f;
 $second_event: #dda15e;
 $third_event: #bc6c25;
 
-$first_birth: #ee9fc0;
-$second_birth: #e15eaa;
-$third_birth: #bc2570;
+$first_birth: #eeb5e4;
+$second_birth: #da79b1;
+$third_birth: #d85697;
 
-$first_death: #c49fee;
-$second_death: #9b5ee1;
-$third_death: #7825bc;
+$first_death: #c9c9c9;
+$second_death: #8b8b8b;
+$third_death: #616161;
 
 html, body {
   margin: 0;
@@ -39,7 +39,7 @@ html, body {
 }
 
 .gradient-general {
-    background: linear-gradient(90deg, $first_general 0%, $second_general 50%, $third_general 100%);
+    background: linear-gradient(90deg, $third_event 0%, $third_birth 50%, $third_death 100%);
 }
 
 .gradient-event {

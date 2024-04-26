@@ -1,4 +1,4 @@
-@use "../home/home.component.scss" as home;
+@use '../../styles.scss' as styles;
 
 html,
 body {
@@ -22,6 +22,8 @@ body {
 #refs {
     font-family: "SF-Pro-Bold", sans-serif;
     margin: 3rem 0 0 0;
+    display: flex;
+    justify-content: center;
 }
 
 #links {
@@ -37,10 +39,10 @@ body {
     justify-content: center;
     font-size: 1.5rem;
     text-decoration: none;
-    color: home.$second_event;
+    color: styles.$second_event;
     margin: 0 1rem;
 }
 
-#links>#link {
+#links > #link {
     flex: 30%;
 }

@@ -1,18 +1,4 @@
-$first_general: #9fabee;
-$second_general: #5ea0dd;
-$third_general: #255abc;
-
-$first_event: #eece9f;
-$second_event: #dda15e;
-$third_event: #bc6c25;
-
-$first_birth: #ee9fe1;
-$second_birth: #d95ee1;
-$third_birth: #bc25b4;
-
-$first_death: #c49fee;
-$second_death: #9b5ee1;
-$third_death: #7825bc;
+@use '../../styles.scss' as styles;
 
 body {
   overflow-x: hidden;
@@ -29,7 +15,7 @@ body {
 #title {
   font-size: 7rem;
   font-family: "SF-Pro-Bold", sans-serif;
-  background: linear-gradient(90deg, $first_general 0%, $second_general 50%, $third_general 100%);
+  background: linear-gradient(90deg, styles.$third_event 15%, styles.$second_birth 50%, styles.$third_death 85%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
