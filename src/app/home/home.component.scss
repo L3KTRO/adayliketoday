@@ -14,7 +14,31 @@ body {
 
 .icon-arrow {
   color: white;
+  cursor: pointer;
 }
+
+#container-date-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#container-date-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#container-date-column > .icon-arrow {
+  padding: 0.5rem 2rem;
+}
+
+#container-date-row > .icon-arrow {
+  padding: 2rem 1rem;
+}
+
+
 
 #title {
   font-size: 7rem;
@@ -39,6 +63,7 @@ body {
   font-size: 2.5rem;
   font-family: "SF-Pro-Bold", sans-serif;
   align-items: center;
+  margin: 0;
 }
 
 #year {
