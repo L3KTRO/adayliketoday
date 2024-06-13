@@ -78,15 +78,9 @@ export class HomeComponent implements OnInit {
 
   getHistory() {
     this.trigger = !this.trigger;
-<<<<<<< Updated upstream
     this.puller.getOnThisDateWithDate(this.date.getDate(), this.date.getMonth()+1).then((result: eventResult) => {
       let event = result.events!![0]
       this.text = event.text.charAt(0).toUpperCase() + event.text.slice(1);
-=======
-    this.puller.getOnThisDateWithDate(this.date.getDate()-1, this.date.getMonth()+1).then((result: eventResult) => {
-      let event = result.events!![Math.floor(Math.random() * (result.events!!.length + 1))]
-      this.text = event.text;
->>>>>>> Stashed changes
       this.references = event.pages;
       this.year = event.year;
     })
