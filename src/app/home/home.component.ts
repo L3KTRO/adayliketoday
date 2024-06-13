@@ -8,6 +8,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import {eventResult} from "wikipedia";
 import {wikiSummary} from "wikipedia/dist/resultTypes";
+import {ContextComponent} from "../context/context.component";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -17,7 +18,8 @@ dayjs.extend(timezone);
   standalone: true,
   imports: [
     LinkComponent,
-    NgForOf
+    NgForOf,
+    ContextComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -62,12 +64,13 @@ export class HomeComponent implements OnInit {
   trigger = false;
   client_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   date = dayjs().tz(this.client_timezone).toDate();
+  data = this.puller.getOnThisDateWithDate(this.date.getDate()-1, this.date.getMonth()+1)
+    .then((result: eventResult) => result);
   text!: string;
   references!: Array<wikiSummary>;
   year!: number | undefined;
 
-  constructor(private puller: PullerService) {
-  }
+  constructor(private puller: PullerService) { }
 
   ngOnInit() {
     this.getHistory()
@@ -75,16 +78,22 @@ export class HomeComponent implements OnInit {
 
   getHistory() {
     this.trigger = !this.trigger;
+<<<<<<< Updated upstream
     this.puller.getOnThisDateWithDate(this.date.getDate(), this.date.getMonth()+1).then((result: eventResult) => {
       let event = result.events!![0]
       this.text = event.text.charAt(0).toUpperCase() + event.text.slice(1);
+=======
+    this.puller.getOnThisDateWithDate(this.date.getDate()-1, this.date.getMonth()+1).then((result: eventResult) => {
+      let event = result.events!![Math.floor(Math.random() * (result.events!!.length + 1))]
+      this.text = event.text;
+>>>>>>> Stashed changes
       this.references = event.pages;
       this.year = event.year;
     })
   }
 
   formatDate() {
-    return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth()) + " de ";
+    return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth());
   }
 
 }

@@ -1,7 +1,4 @@
-$first: rgb(238, 206, 159);
-$second: rgb(221, 161, 94);
-$third: rgb(188, 108, 37);
-
+@use "../../styles" as styles;
 
 .container {
   display: flex;
@@ -13,7 +10,7 @@ $third: rgb(188, 108, 37);
 #title {
   font-size: 6rem;
   font-family: "SF-Pro-Bold", sans-serif;
-  background: linear-gradient(90deg, $first 0%, $second 50%, $third 100%);
+  background: linear-gradient(90deg, styles.$first 0%, styles.$second 50%, styles.$third 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 1rem;
@@ -24,55 +21,19 @@ $third: rgb(188, 108, 37);
   display: flex;
   font-size: 2.5rem;
   font-family: "SF-Pro-Bold", sans-serif;
-  color: $second;
+  color: styles.$second;
   align-items: center;
 }
 
 #year {
-  margin: 0 0.5rem;
-  color: $first;
-}
-
-#text {
-  font-size: 2rem;
-  background: linear-gradient(140deg, $third 0%, $second 50%, $first 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-align: justify;
-  margin: 2rem 20%;
-}
-
-#refs {
   font-family: "SF-Pro-Bold", sans-serif;
-  margin: 3rem 0 0 0;
-  color: $second;
+  font-size: 3rem;
+  margin: 0 0.5rem;
+  color: styles.$first;
 }
-
-#links {
-  display: flex;
-  flex-direction: row;
-  margin: 2rem 20rem;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-#link {
-  display: flex;
-  justify-content: center;
-  font-size: 1.5rem;
-  text-decoration: none;
-  color: $second;
-  margin: 0 1rem;
-}
-
-#links > #link {
-  flex: 30%;
-}
-
 
 @media (max-width: 600px) {
   #title {
     font-size: 4rem;
   }
-
 }

@@ -1,5 +1,6 @@
 <div class="container" [@listStagger]="trigger ? 'in' : 'out'">
   <h1 id="title">Un día como hoy...</h1>
+<<<<<<< Updated upstream
   <h1 id="date">{{formatDate()}}<span id="year">{{year}}</span></h1>
   <h1 id="text">{{ text }}</h1>
   <h1 id="refs">Referencias</h1>
@@ -8,6 +9,13 @@
       <reference-link [link]="link"></reference-link>
     </div>
   </div>
+=======
+  <h1 id="date">{{formatDate()}}</h1>
+  <span id="year">{{year}}</span>
+  <i class="fa-solid fa-arrow-right" style="color: white"></i>
+  <i class="fa-solid fa-arrow-left" style="color: white"></i>
+  <app-context [text]="text" [references]="references"></app-context>
+>>>>>>> Stashed changes
 </div>
 
 
