@@ -7,8 +7,8 @@
     <button id="year-newest" (click)="newest()">Newest</button>
   </div>
   <div id="branch-controller">
-    <button id="branch-prev" (click)="prevBranch()">Branch Prev</button>
-    <button id="branch-next" (click)="nextBranch()">Branch Next</button>
+    <i class="fa-solid fa-arrow-left" (click)="prevBranch()"></i>
+    <i class="fa-solid fa-arrow-right" (click)="nextBranch()"></i>
   </div>
   <div class="container" [@branchChange]="branchChange" (@branchChange.done)="branchChange = 'done'">
     <h1 id="date" [ngClass]="getColorByBranch(indexBranch).second">{{ formatDate() }}<span id="year"
