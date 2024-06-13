@@ -1,4 +1,9 @@
-@use "../../styles" as styles;
+@use '../../styles.scss' as styles;
+
+body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
 
 .container {
   display: flex;
@@ -7,24 +12,63 @@
   justify-content: center;
 }
 
+.icon-arrow {
+  color: white;
+  cursor: pointer;
+}
+
+#container-date-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+#container-date-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#container-date-column > .icon-arrow {
+  padding: 0.5rem 2rem;
+}
+
+#container-date-row > .icon-arrow {
+  padding: 2rem 1rem;
+}
+
+
+
 #title {
-  font-size: 6rem;
+  font-size: 7rem;
   font-family: "SF-Pro-Bold", sans-serif;
-  background: linear-gradient(90deg, styles.$first 0%, styles.$second 50%, styles.$third 100%);
+  background: linear-gradient(90deg, styles.$third_event 15%, styles.$second_birth 50%, styles.$third_death 85%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin: 1rem;
+  margin: 2rem;
   text-align: center;
+}
+
+#concept {
+  display: flex;
+  font-size: 2rem;
+  font-family: "SF-Pro-Bold", sans-serif;
+  align-items: center;
 }
 
 #date {
   display: flex;
   font-size: 2.5rem;
   font-family: "SF-Pro-Bold", sans-serif;
-  color: styles.$second;
   align-items: center;
+  margin: 0;
 }
 
+#year {
+  margin: 0 0.5rem;
+=======
 #year {
   font-family: "SF-Pro-Bold", sans-serif;
   font-size: 3rem;

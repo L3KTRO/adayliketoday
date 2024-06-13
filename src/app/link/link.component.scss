@@ -1,9 +1,13 @@
 @use "../../styles" as styles;
 
+html, body {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
 a {
   display: flex;
   justify-content: space-between;
   font-size: 1.5rem;
-  color: styles.$third;
   margin: 0 1rem;
 }

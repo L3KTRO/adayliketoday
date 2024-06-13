@@ -3,11 +3,28 @@ $first: rgb(238, 206, 159);
 $second: rgb(221, 161, 94);
 $third: rgb(188, 108, 37);
 
+$first_general: #9fabee;
+$second_general: #5ea0dd;
+$third_general: #255abc;
+
+$first_event: #eece9f;
+$second_event: #dda15e;
+$third_event: #bc6c25;
+
+$first_birth: #eeb5e4;
+$second_birth: #da79b1;
+$third_birth: #d85697;
+
+$first_death: #c9c9c9;
+$second_death: #8b8b8b;
+$third_death: #616161;
+
 html, body {
   margin: 0;
   padding: 0;
   font-family: "SF-Pro", sans-serif;
   background-color: $base;
+  overflow-x: hidden;
 };
 
 @font-face {
@@ -22,4 +39,85 @@ html, body {
   src: url('assets/SF-Pro-Display-Regular.otf') format('truetype');
   font-weight: bold;
   font-style: normal;
+}
+
+.gradient-general {
+    background: linear-gradient(90deg, $third_event 0%, $third_birth 50%, $third_death 100%);
+}
+
+.gradient-event {
+    background: linear-gradient(90deg, $first_event 0%, $second_event 50%, $third_event 100%);
+}
+
+.gradient-birth {
+    background: linear-gradient(90deg, $first_birth 0%, $second_birth 50%, $third_birth 100%);
+}
+
+.gradient-death {
+    background: linear-gradient(90deg, $first_death 0%, $second_death 50%, $third_death 100%);
+}
+
+.first-general {
+    color: $first_general;
+}
+
+.second-general {
+    color: $second_general;
+}
+
+.third-general {
+    color: $third_general;
+}
+
+.first-event {
+    color: $first_event;
+}
+
+.second-event {
+    color: $second_event;
+}
+
+.third-event {
+    color: $third_event;
+}
+
+.first-birth {
+    color: $first_birth;
+}
+
+.second-birth {
+    color: $second_birth;
+}
+
+.third-birth {
+    color: $third_birth;
+}
+
+.first-death {
+    color: $first_death;
+}
+
+.second-death {
+    color: $second_death;
+}
+
+.third-death {
+    color: $third_death;
+}
+
+
+.footer {
+  color: white;
+}
+
+#container-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-footer-child {
+  text-align: center;
+  width: 33%;
 }

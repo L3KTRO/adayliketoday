@@ -1,8 +1,9 @@
-# A day like today
+# ⏳ A day like today
 
 Un dia como hoy, en otros años, pasaron cosas como las que podrás ver en la web
 
-- [x] Cambiar formato de fecha de 'dd/mm/yyyy' a 'dd de MM de yyyy'
-- [x] Enlaces se abren en nueva pestaña
-- [ ] Añadir acontecimiento, nacimiento y fallecimiento del dia
-- [ ] Añadir carrusel para ver todos los acontecimientos/nacimientos/fallecimientos del dia
+### ROADMAP TO v0.2
+- [ ] Animaciones orientadas a donde se clicka (si se clica a la derecha, animacion hacia la derecha; si se clica a la izq anim hacia la izq...)
+- [ ] Refactorización del código (tipos, etc.)
+- [ ] Traducciones al ingles (textos y formato de la fecha)
+- [ ] Mejorar el diseño

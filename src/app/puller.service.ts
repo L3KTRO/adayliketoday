@@ -1,23 +1,25 @@
-import {Injectable} from '@angular/core';
-import wiki from "wikipedia";
+import { Injectable } from '@angular/core';
+import wiki, { eventResult } from "wikipedia";
+import { Branch } from './branch';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PullerService {
 
-  async getOnThisDate() {
+  async prepareItems(day: number | undefined, month: number | undefined): Promise<[Branch, Branch, Branch]> {
     wiki.setLang('es');
-    return await wiki.onThisDay();
+    let items = (!day || !month) ? await wiki.onThisDay() : await wiki.onThisDay({ month: month.toString(), day: day.toString() });
+    return [
+      new Branch("Hecho histórico", items.events),
+      new Branch("Nacimiento", items.births),
+      new Branch("Fallecimiento", items.deaths)
+    ];
   }
 
-  async getOnThisDateWithDate(day: number, month: number) {
-    wiki.setLang('es');
-    return await wiki.onThisDay({month: month.toString(), day: day.toString()});
-  }
 
-  getWritedMonth(month: number) : string {
-    switch((month+1)) {
+  getWritedMonth(month: number): string {
+    switch ((month + 1)) {
       case 1:
         return 'Enero';
       case 2:
