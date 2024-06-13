@@ -22,6 +22,7 @@
     </div>
 
 
+
     <h1 id="concept" [ngClass]="getColorByBranch(indexBranch).third"> {{ concept }} </h1>
     <history-item [text]="text" [references]="references" [indexBranch]="indexBranch" [@dataChange]="dataState"
                   (@dataChange.done)="dataState = 'done'"></history-item>

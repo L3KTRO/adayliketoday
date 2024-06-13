@@ -15,6 +15,7 @@ import {RouterOutlet} from "@angular/router";
 
 const transitionTime = 300;
 
+
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -182,7 +183,7 @@ export class HomeComponent implements OnInit {
   }
 
   formatDate() {
-    return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth()) + " de ";
+    return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth());
   }
 
 }
