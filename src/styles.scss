@@ -101,3 +101,20 @@ html, body {
 .third-death {
     color: $third_death;
 }
+
+
+.footer {
+  color: white;
+}
+
+#container-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-footer-child {
+  text-align: center;
+  width: 33%;
+}

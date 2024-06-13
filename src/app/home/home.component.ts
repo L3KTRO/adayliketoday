@@ -11,6 +11,7 @@ import { wikiSummary } from "wikipedia/dist/resultTypes";
 import { ItemComponent } from '../item/item.component';
 import { getColorByBranch } from '../../main';
 import { blockOverflow, unblockOverflow } from '../../main';
+import {RouterOutlet} from "@angular/router";
 
 const transitionTime = 300;
 
@@ -25,7 +26,8 @@ dayjs.extend(timezone);
     ItemComponent,
     NgForOf,
     NgClass,
-    NgIf
+    NgIf,
+    RouterOutlet
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
