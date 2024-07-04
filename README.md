@@ -8,3 +8,4 @@ Un dia como hoy, en otros años, pasaron cosas como las que podrás ver en la we
 - [ ] Traducciones al ingles (textos y formato de la fecha)
 - [ ] Mejorar el diseño desktop
 - [ ] Adaptar diseño a movil
+- [ ] Seleccionar idioma
