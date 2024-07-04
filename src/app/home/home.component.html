@@ -1,5 +1,5 @@
 <div class="container" [@listStagger] *ngIf="branches">
-  <h1 id="title">Un día como hoy...</h1>
+  <h1 id="title">A day like today</h1>
   <div id="year-controller">
   </div>
 
@@ -8,19 +8,21 @@
 
   <div class="container" [@branchChange]="branchChange" (@branchChange.done)="branchChange = 'done'">
     <div id="container-date-column">
-      <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()"></i>
+      <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()" [ngClass]="getColorByBranch(indexBranch).first"></i>
       <div id="container-date-row">
-        <i class="fa-solid fa-arrow-left icon-arrow" (click)="prevBranch()"></i>
+        <i class="fa-solid fa-arrow-left icon-arrow" (click)="prevBranch()"
+           [ngClass]="getColorByBranch(indexBranch).first"></i>
         <h1 id="date" [ngClass]="getColorByBranch(indexBranch).second">{{ formatDate() }}
           <span id="year" [ngClass]="getColorByBranch(indexBranch).first" [@dataChange]="dataStateYear"
                 (@dataChange.done)="dataStateYear = 'done'">{{ year }}
           </span>
         </h1>
-        <i class="fa-solid fa-arrow-right icon-arrow" (click)="nextBranch()"></i>
+        <i class="fa-solid fa-arrow-right icon-arrow" (click)="nextBranch()"
+           [ngClass]="getColorByBranch(indexBranch).first"></i>
       </div>
-      <i class="fa-solid fa-arrow-down icon-arrow" (click)="next()"></i>
+      <i class="fa-solid fa-arrow-down icon-arrow" (click)="next()"
+         [ngClass]="getColorByBranch(indexBranch).first"></i>
     </div>
-
 
 
     <h1 id="concept" [ngClass]="getColorByBranch(indexBranch).third"> {{ concept }} </h1>

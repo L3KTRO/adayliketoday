@@ -1,6 +1,6 @@
 {
   "name": "adayliketoday",
-  "version": "0.1",
+  "version": "0.1.2",
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
