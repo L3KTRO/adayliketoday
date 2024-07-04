@@ -3,6 +3,8 @@ import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 import { first } from 'rxjs';
 
+export var load = false;
+
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));

@@ -1,17 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { PullerService } from "../puller.service";
-import { LinkComponent } from "../link/link.component";
-import { animate, query, stagger, style, transition, trigger } from "@angular/animations";
-import { NgClass, NgForOf, NgIf } from "@angular/common";
+import {Component, OnInit} from '@angular/core';
+import {PullerService} from "../puller.service";
+import {LinkComponent} from "../link/link.component";
+import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import { Branch } from "../branch";
-import { wikiSummary } from "wikipedia/dist/resultTypes";
-import { ItemComponent } from '../item/item.component';
-import { getColorByBranch } from '../../main';
-import { blockOverflow, unblockOverflow } from '../../main';
+import {Branch} from "../branch";
+import {wikiSummary} from "wikipedia/dist/resultTypes";
+import {ItemComponent} from '../item/item.component';
+import {blockOverflow, getColorByBranch, unblockOverflow} from '../../main';
 import {RouterOutlet} from "@angular/router";
+import {FooterComponent} from "../footer/footer.component";
 
 const transitionTime = 300;
 
@@ -28,7 +28,8 @@ dayjs.extend(timezone);
     NgForOf,
     NgClass,
     NgIf,
-    RouterOutlet
+    RouterOutlet,
+    FooterComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
@@ -107,8 +108,7 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
-    let branches = await this.puller.prepareItems(this.date.getDate(), this.date.getMonth() + 1);
-    this.branches = branches;
+    this.branches = await this.puller.prepareItems(this.date.getDate(), this.date.getMonth() + 1);
     await this.initialization();
   }
 
@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
     this.refreshing = true;
     blockOverflow();
 
-    if (animate == false) this.branchChange = 'entering';
+    if (!animate) this.branchChange = 'entering';
     else {
       this.dataState = 'entering';
       this.dataStateYear = 'entering';

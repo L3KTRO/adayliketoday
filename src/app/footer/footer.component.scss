@@ -1,0 +1,16 @@
+.footer {
+  color: white;
+}
+
+#container-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-footer-child {
+  text-align: center;
+  width: 33%;
+  padding: 0 10rem;
+}
