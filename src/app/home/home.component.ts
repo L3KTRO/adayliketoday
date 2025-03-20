@@ -112,17 +112,6 @@ export class HomeComponent {
     this.refresh();
   }
 
-
-  oldest() {
-    this.selectedBranch()?.oldest();
-    this.refresh();
-  }
-
-  newest() {
-    this.selectedBranch()?.newest();
-    this.refresh();
-  }
-
   initialization() {
     if (this.branches.status() !== ResourceStatus.Resolved) return
     this.indexBranch.set(0);

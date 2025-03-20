@@ -1,47 +1,36 @@
 import {wikiSummary} from "wikipedia";
+import {signal, WritableSignal} from "@angular/core";
 
 export class Branch {
-  public readonly concept!: string;
-  index = 0;
-  data!: itemData[];
+  concept: string;
+  index = signal(0);
+  data!: WritableSignal<itemData[]>;
 
   constructor(concept: string, data: itemData[] | undefined) {
     if (data) {
-      this.data = data.filter((branch) => branch.year != undefined);
-      this.index = Math.floor(Math.random() * (this.data.length - 1));
+      data = data.filter((branch) => branch.year != undefined)
+      this.data.set(data);
+      this.index.set(Math.floor(Math.random() * (this.data.length - 1)));
     }
 
     this.concept = concept;
   }
 
   get() {
-    return this.data[this.index];
-  }
-
-  getYears() {
-    return this.data.map((branch, index) => [branch.year!!, index]);
+    return this.data()[this.index()];
   }
 
   next() {
-    if (this.index < this.data.length - 1) {
-      this.index++;
+    if (this.index() < this.data.length - 1) {
+      this.index.update(ind => ind + 1);
     }
   }
 
   prev() {
-    if (this.index > 0) {
-      this.index--;
+    if (this.index() > 0) {
+      this.index.update(ind => ind - 1);
     }
   }
-
-  oldest() {
-    this.index = this.getYears().sort((a, b) => a[0] - b[0])[0][1];
-  }
-
-  newest() {
-    this.index = this.getYears().sort((a, b) => b[0] - a[0])[0][1];
-  }
-
 }
 
 interface itemData {
