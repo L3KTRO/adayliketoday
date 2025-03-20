@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "19": "^0.0.0",
     "@angular/animations": "^17.3.11",
     "@angular/common": "^17.3.11",
     "@angular/compiler": "^17.3.11",
@@ -23,6 +24,7 @@
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.2",
+    "angular": "^1.8.3",
     "dayjs": "^1.11.10",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

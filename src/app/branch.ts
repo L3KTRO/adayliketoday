@@ -1,4 +1,4 @@
-import { wikiSummary } from "wikipedia";
+import {wikiSummary} from "wikipedia";
 
 export class Branch {
   public readonly concept!: string;
