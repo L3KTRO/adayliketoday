@@ -6,7 +6,6 @@ import { getColorByBranch } from '../../main';
 
 @Component({
   selector: 'history-item',
-  standalone: true,
   imports: [
     LinkComponent,
     NgForOf,
@@ -14,6 +13,7 @@ import { getColorByBranch } from '../../main';
   ],
   templateUrl: './item.component.html',
   styleUrl: './item.component.scss',
+  standalone: true,
   animations: []
 })
 export class ItemComponent {

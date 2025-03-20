@@ -1,8 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit, resource, ResourceStatus, signal} from '@angular/core';
 import {PullerService} from "../puller.service";
-import {LinkComponent} from "../link/link.component";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgIf} from "@angular/common";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
@@ -10,109 +9,80 @@ import {Branch} from "../branch";
 import {wikiSummary} from "wikipedia/dist/resultTypes";
 import {ItemComponent} from '../item/item.component';
 import {blockOverflow, getColorByBranch, unblockOverflow} from '../../main';
-import {RouterOutlet} from "@angular/router";
 import {FooterComponent} from "../footer/footer.component";
 
 const transitionTime = 300;
-
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 @Component({
   selector: 'app-home',
-  standalone: true,
   imports: [
-    LinkComponent,
     ItemComponent,
-    NgForOf,
     NgClass,
     NgIf,
-    RouterOutlet,
     FooterComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  standalone: true,
   animations: [
     trigger('listStagger', [
       transition('* <=> *', [
-        query(
-          '*',
-          [
-            style({ opacity: 0, transform: 'translateY(-35px)' }),
-            stagger(
-              '100ms',
-              animate(
-                '250ms ease-out',
-                style({ opacity: 1, transform: 'translateY(0px)' })
-              )
-            )
-          ],
-        )
+        query('*', [
+          style({opacity: 0, transform: 'translateY(-35px)'}),
+          stagger('100ms', animate('250ms ease-out', style({opacity: 1, transform: 'translateY(0px)'})))
+        ])
       ])
     ]),
     trigger('dataChange', [
       transition('entering => done', [
-        style({ opacity: 0, transform: 'translateY(-30px)' }),
-        animate(
-          `${transitionTime}ms ease-out`,
-          style({ opacity: 1, transform: 'translateY(0px)' })
-        )
+        style({opacity: 0, transform: 'translateY(-30px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 1, transform: 'translateY(0px)'}))
       ]),
       transition('done => entering', [
-        style({ opacity: 1, transform: 'translateY(0px)' }),
-        animate(
-          `${transitionTime}ms ease-out`,
-          style({ opacity: 0, transform: 'translateY(30px)' }),
-        )
+        style({opacity: 1, transform: 'translateY(0px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 0, transform: 'translateY(30px)'}))
       ]),
     ]),
     trigger('branchChange', [
       transition('entering => done', [
-        style({ opacity: 0, transform: 'translateX(-30px)' }),
-        animate(
-          `${transitionTime}ms ease-out`,
-          style({ opacity: 1, transform: 'translateX(0px)' })
-        )
+        style({opacity: 0, transform: 'translateX(-30px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 1, transform: 'translateX(0px)'}))
       ]),
       transition('done => entering', [
-        style({ opacity: 1, transform: 'translateX(0px)' }),
-        animate(
-          `${transitionTime}ms ease-out`,
-          style({ opacity: 0, transform: 'translateX(30px)' }),
-        )
+        style({opacity: 1, transform: 'translateX(0px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 0, transform: 'translateX(30px)'}))
       ]),
     ])
   ]
 })
-export class HomeComponent implements OnInit {
-  trigger = false;
+export class HomeComponent {
   client_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  date = dayjs().tz(this.client_timezone).toDate();
-  concept!: string;
-  text!: string;
-  references!: Array<wikiSummary>;
-  year!: number | undefined;
-  branches!: [Branch, Branch, Branch];
-  indexBranch = 0;
-  selectedBranch!: Branch;
   dataState: 'entering' | 'done' = 'done';
   dataStateYear: 'entering' | 'done' = 'done';
   branchChange: 'entering' | 'done' = 'done';
   refreshing = false;
+  puller = inject(PullerService)
+  date = signal(dayjs().tz(this.client_timezone).toDate());
+  indexBranch = signal(0);
+  selectedBranch = computed(() => {
+    const _branches = this.branches.value()
+    return _branches ? _branches[this.indexBranch()] : null
+  });
+  references = computed(() => this.selectedBranch() ? this.selectedBranch()!.get().pages : Array<wikiSummary>());
+  year = computed(() => this.selectedBranch()?.get()?.year);
+  colorBranch = computed(() => getColorByBranch(this.indexBranch()))
+  text = computed(() => this.selectedBranch() ? this.selectedBranch()!.get().text : "");
 
-  constructor(private puller: PullerService) { }
 
-  getColorByBranch(branchIndex: number) {
-    return getColorByBranch(branchIndex);
-  }
+  branches = resource({
+    request: () => ({date: this.date()}),
+    loader: async ({request}) => await this.puller.prepareItems(request.date.getDate(), request.date.getMonth() + 1),
+  })
 
-  async ngOnInit() {
-    this.branches = await this.puller.prepareItems(this.date.getDate(), this.date.getMonth() + 1);
-    await this.initialization();
-  }
-
-  async refresh(animate = true, indexBranchChecked: number = this.indexBranch) {
+  refresh(animate = true, indexBranchChecked: number = this.indexBranch()) {
     if (this.refreshing) return;
     this.refreshing = true;
     blockOverflow();
@@ -124,66 +94,64 @@ export class HomeComponent implements OnInit {
     }
 
     setTimeout(() => {
-      this.indexBranch = indexBranchChecked;
-      this.selectedBranch = this.branches[this.indexBranch];
-      let item = this.selectedBranch.get();
-      this.concept = this.selectedBranch.concept;
-      this.text = item.text.charAt(0).toUpperCase() + item.text.slice(1);
-      this.references = item.pages;
-      this.year = item.year;
+      if (this.branches.status() !== ResourceStatus.Resolved) return
+      this.indexBranch.set(indexBranchChecked);
       this.refreshing = false;
       unblockOverflow();
     }, transitionTime);
   }
 
-  async next() {
-    this.selectedBranch.next();
-    await this.refresh();
+  next() {
+    this.selectedBranch()?.next();
+    this.refresh();
   }
 
-  async prev() {
-    this.selectedBranch.prev();
-    await this.refresh();
+
+  prev() {
+    this.selectedBranch()?.prev();
+    this.refresh();
   }
 
-  async oldest() {
-    this.selectedBranch.oldest();
-    await this.refresh();
+
+  oldest() {
+    this.selectedBranch()?.oldest();
+    this.refresh();
   }
 
-  async newest() {
-    this.selectedBranch.newest();
-    await this.refresh();
+  newest() {
+    this.selectedBranch()?.newest();
+    this.refresh();
   }
 
-  async initialization() {
-    this.selectedBranch = this.branches[0];
-    await this.refresh();
+  initialization() {
+    if (this.branches.status() !== ResourceStatus.Resolved) return
+    this.indexBranch.set(0);
+    this.refresh();
   }
 
-  async checkBranch(mod: number) {
+  checkBranch(mod: number) {
     this.branchChange = 'entering';
-    if (this.indexBranch+mod < 0) {
+    if (this.indexBranch() + mod < 0) {
       return 2;
-    } else if (this.indexBranch+mod > 2) {
+    } else if (this.indexBranch() + mod > 2) {
       return 0;
     } else {
-      return this.indexBranch+mod;
+      return this.indexBranch() + mod;
     }
   }
 
-  async nextBranch() {
-    let indexBranchChecked = await this.checkBranch(+1)
-    await this.refresh(false, indexBranchChecked);
+  nextBranch() {
+    let indexBranchChecked = this.checkBranch(+1)
+    this.refresh(false, indexBranchChecked);
   }
 
-  async prevBranch() {
-    let indexBranchChecked = await this.checkBranch(-1)
-    await this.refresh(false, indexBranchChecked);
+  prevBranch() {
+    let indexBranchChecked = this.checkBranch(-1)
+    this.refresh(false, indexBranchChecked);
   }
 
   formatDate() {
-    return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth());
+    return `0${(this.date().getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date().getMonth());
   }
 
 }

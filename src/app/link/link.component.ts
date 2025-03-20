@@ -5,11 +5,11 @@ import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'reference-link',
-  standalone: true,
   imports: [
     NgClass
   ],
   templateUrl: './link.component.html',
+  standalone: true,
   styleUrl: './link.component.scss'
 })
 export class LinkComponent {

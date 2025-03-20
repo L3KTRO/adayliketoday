@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {Injectable, resource} from '@angular/core';
 import wiki, {eventResult} from "wikipedia";
 import {Branch} from './branch';
 

@@ -4,14 +4,13 @@ import {NgForOf} from "@angular/common";
 import {wikiSummary} from "wikipedia/dist/resultTypes";
 
 @Component({
-  selector: 'app-context',
-  standalone: true,
+    selector: 'app-context',
     imports: [
         LinkComponent,
         NgForOf
     ],
-  templateUrl: './context.component.html',
-  styleUrl: './context.component.scss'
+    templateUrl: './context.component.html',
+    styleUrl: './context.component.scss'
 })
 export class ContextComponent {
     @Input() text!: string;

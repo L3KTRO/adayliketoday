@@ -8,25 +8,25 @@
 
   <div class="container" [@branchChange]="branchChange" (@branchChange.done)="branchChange = 'done'">
     <div id="container-date-column">
-      <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()" [ngClass]="getColorByBranch(indexBranch).first"></i>
+      <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()" [ngClass]="colorBranch().first"></i>
       <div id="container-date-row">
         <i class="fa-solid fa-arrow-left icon-arrow" (click)="prevBranch()"
-           [ngClass]="getColorByBranch(indexBranch).first"></i>
-        <h1 id="date" [ngClass]="getColorByBranch(indexBranch).second">{{ formatDate() }}
-          <span id="year" [ngClass]="getColorByBranch(indexBranch).first" [@dataChange]="dataStateYear"
-                (@dataChange.done)="dataStateYear = 'done'">{{ year }}
+           [ngClass]="colorBranch().first"></i>
+        <h1 id="date" [ngClass]="colorBranch().second">{{ formatDate() }}
+          <span id="year" [ngClass]="colorBranch().first" [@dataChange]="dataStateYear"
+                (@dataChange.done)="dataStateYear = 'done'">{{ year() }}
           </span>
         </h1>
         <i class="fa-solid fa-arrow-right icon-arrow" (click)="nextBranch()"
-           [ngClass]="getColorByBranch(indexBranch).first"></i>
+           [ngClass]="colorBranch().first"></i>
       </div>
       <i class="fa-solid fa-arrow-down icon-arrow" (click)="next()"
-         [ngClass]="getColorByBranch(indexBranch).first"></i>
+         [ngClass]="colorBranch().first"></i>
     </div>
 
 
-    <h1 id="concept" [ngClass]="getColorByBranch(indexBranch).third"> {{ concept }} </h1>
-    <history-item [text]="text" [references]="references" [indexBranch]="indexBranch" [@dataChange]="dataState"
+    <h1 id="concept" [ngClass]="colorBranch().third"> {{ this.selectedBranch()?.concept }} </h1>
+    <history-item [text]="text()" [references]="references()" [indexBranch]="indexBranch()" [@dataChange]="dataState"
                   (@dataChange.done)="dataState = 'done'"></history-item>
   </div>
   <footer></footer>

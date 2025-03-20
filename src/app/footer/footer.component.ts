@@ -5,9 +5,9 @@ import packageJson from '../../../package.json'
 
 @Component({
   selector: 'footer',
-  standalone: true,
   imports: [],
   templateUrl: './footer.component.html',
+  standalone: true,
   styleUrl: './footer.component.scss'
 })
 export class FooterComponent {
