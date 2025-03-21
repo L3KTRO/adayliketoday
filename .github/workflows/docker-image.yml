@@ -35,6 +35,18 @@ jobs:
           tags: ghcr.io/${{ env.REPO_NAME }}:latest
           dockerfile: Dockerfile
 
+      - name: Read package.json
+        uses: zvonimirsun/read-package-version-actions@v2
+        id: package-version
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ env.REPO_NAME }}:${{ steps.package-version.outputs.version }}
+          dockerfile: Dockerfile
+
       - name: Update to portainer
         uses: fjogeleit/http-request-action@v1
         with:
