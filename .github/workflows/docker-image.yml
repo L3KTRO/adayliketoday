@@ -44,7 +44,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ env.REPO_NAME }}:${{ steps.package-version.outputs.version }}
+          tags: ghcr.io/${{ env.REPO_NAME }}:v${{ steps.package-version.outputs.version }}
           dockerfile: Dockerfile
 
       - name: Update to portainer
