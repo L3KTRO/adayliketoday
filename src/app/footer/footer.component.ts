@@ -4,7 +4,7 @@ import packageJson from '../../../package.json'
 
 
 @Component({
-  selector: 'footer',
+  selector: 'app-footer',
   imports: [],
   templateUrl: './footer.component.html',
   standalone: true,

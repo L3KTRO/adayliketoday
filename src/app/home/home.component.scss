@@ -9,7 +9,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  min-height: 70vh;
 }
 
 .icon-arrow {
@@ -37,10 +38,8 @@ body {
   padding: 2rem 1rem;
 }
 
-
-
 #title {
-  font-size: 7rem;
+  font-size: 4rem;
   font-family: "SF-Pro-Bold", sans-serif;
   background: linear-gradient(90deg, styles.$third_event 15%, styles.$second_birth 50%, styles.$third_death 85%);
   -webkit-background-clip: text;
@@ -52,14 +51,14 @@ body {
 
 #concept {
   display: flex;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: "SF-Pro-Bold", sans-serif;
   align-items: center;
 }
 
 #date {
   display: flex;
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-family: "SF-Pro-Bold", sans-serif;
   align-items: center;
   margin: 0;
@@ -67,12 +66,12 @@ body {
 
 #year {
   font-family: "SF-Pro-Bold", sans-serif;
-  font-size: 3rem;
+  font-size: 2.25rem;
   margin: 0 0.5rem;
 }
 
 @media (max-width: 600px) {
   #title {
-    font-size: 4rem;
+    font-size: 2rem;
   }
 }

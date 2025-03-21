@@ -8,8 +8,8 @@ import timezone from 'dayjs/plugin/timezone';
 import {wikiSummary} from "wikipedia/dist/resultTypes";
 import {ItemComponent} from '../item/item.component';
 import {blockOverflow, getColorByBranch, unblockOverflow} from '../../main';
-import {FooterComponent} from "../footer/footer.component";
 import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
+import {FooterComponent} from "../footer/footer.component";
 
 const transitionTime = 250;
 
@@ -22,8 +22,8 @@ dayjs.extend(timezone);
     ItemComponent,
     NgClass,
     NgIf,
-    FooterComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    FooterComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
