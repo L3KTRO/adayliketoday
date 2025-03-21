@@ -6,29 +6,36 @@
   <div id="branch-controller">
   </div>
 
-  <div class="container" [@branchChange]="branchChange" (@branchChange.done)="branchChange = 'done'">
-    <div id="container-date-column">
-      <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()" [ngClass]="colorBranch().first"></i>
-      <div id="container-date-row">
-        <i class="fa-solid fa-arrow-left icon-arrow" (click)="prevBranch()"
-           [ngClass]="colorBranch().first"></i>
-        <h1 id="date" [ngClass]="colorBranch().second">{{ formatDate() }}
-          <span id="year" [ngClass]="colorBranch().first" [@dataChange]="dataStateYear"
-                (@dataChange.done)="dataStateYear = 'done'">{{ year() }}
+  @if (branches) {
+    <div class="container" [@branchChange]="branchChange" (@branchChange.done)="branchChange = 'done'">
+      <div id="container-date-column">
+        <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()" [ngClass]="colorBranch().first"></i>
+        <div id="container-date-row">
+          <i class="fa-solid fa-arrow-left icon-arrow" (click)="prevBranch()"
+             [ngClass]="colorBranch().first"></i>
+          <h1 id="date" [ngClass]="colorBranch().second">{{ formatDate() }}
+            <span id="year" [ngClass]="colorBranch().first" [@dataChange]="dataStateYear"
+                  (@dataChange.done)="dataStateYear = 'done'">{{ year() }}
           </span>
-        </h1>
-        <i class="fa-solid fa-arrow-right icon-arrow" (click)="nextBranch()"
+          </h1>
+          <i class="fa-solid fa-arrow-right icon-arrow" (click)="nextBranch()"
+             [ngClass]="colorBranch().first"></i>
+        </div>
+        <i class="fa-solid fa-arrow-down icon-arrow" (click)="next()"
            [ngClass]="colorBranch().first"></i>
       </div>
-      <i class="fa-solid fa-arrow-down icon-arrow" (click)="next()"
-         [ngClass]="colorBranch().first"></i>
+
+
+      <h1 id="concept" [ngClass]="colorBranch().third"> {{ this.selectedBranch()?.concept }} </h1>
+      <history-item [text]="text()" [references]="references()" [indexBranch]="indexBranch()" [@dataChange]="dataState"
+                    (@dataChange.done)="dataState = 'done'"></history-item>
     </div>
+  } @else {
+    <div>
+      <h1 id="loading">Loading...</h1>
+    </div>
+  }
 
-
-    <h1 id="concept" [ngClass]="colorBranch().third"> {{ this.selectedBranch()?.concept }} </h1>
-    <history-item [text]="text()" [references]="references()" [indexBranch]="indexBranch()" [@dataChange]="dataState"
-                  (@dataChange.done)="dataState = 'done'"></history-item>
-  </div>
   <footer></footer>
 </div>
 

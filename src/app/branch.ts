@@ -4,13 +4,13 @@ import {signal, WritableSignal} from "@angular/core";
 export class Branch {
   concept: string;
   index = signal(0);
-  data!: WritableSignal<itemData[]>;
+  data: WritableSignal<itemData[]> = signal([]);
 
   constructor(concept: string, data: itemData[] | undefined) {
     if (data) {
       data = data.filter((branch) => branch.year != undefined)
       this.data.set(data);
-      this.index.set(Math.floor(Math.random() * (this.data.length - 1)));
+      this.index.set(Math.floor(Math.random() * (data.length - 1)));
     }
 
     this.concept = concept;
@@ -21,7 +21,7 @@ export class Branch {
   }
 
   next() {
-    if (this.index() < this.data.length - 1) {
+    if (this.index() < this.data().length - 1) {
       this.index.update(ind => ind + 1);
     }
   }

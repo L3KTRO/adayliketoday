@@ -1,17 +1,16 @@
-import {Component, computed, inject, OnInit, resource, ResourceStatus, signal} from '@angular/core';
+import {Component, computed, inject, resource, ResourceStatus, signal} from '@angular/core';
 import {PullerService} from "../puller.service";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 import {NgClass, NgIf} from "@angular/common";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
-import {Branch} from "../branch";
 import {wikiSummary} from "wikipedia/dist/resultTypes";
 import {ItemComponent} from '../item/item.component';
 import {blockOverflow, getColorByBranch, unblockOverflow} from '../../main';
 import {FooterComponent} from "../footer/footer.component";
 
-const transitionTime = 300;
+const transitionTime = 250;
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -65,21 +64,21 @@ export class HomeComponent {
   branchChange: 'entering' | 'done' = 'done';
   refreshing = false;
   puller = inject(PullerService)
-  date = signal(dayjs().tz(this.client_timezone).toDate());
+  date = dayjs().tz(this.client_timezone).toDate();
   indexBranch = signal(0);
   selectedBranch = computed(() => {
     const _branches = this.branches.value()
     return _branches ? _branches[this.indexBranch()] : null
   });
   references = computed(() => this.selectedBranch() ? this.selectedBranch()!.get().pages : Array<wikiSummary>());
-  year = computed(() => this.selectedBranch()?.get()?.year);
+  year = computed(() => this.selectedBranch()?.get().year);
   colorBranch = computed(() => getColorByBranch(this.indexBranch()))
-  text = computed(() => this.selectedBranch() ? this.selectedBranch()!.get().text : "");
-
+  text = computed(() => this.selectedBranch() ? (this.selectedBranch()!.get().text[0].toUpperCase() + this.selectedBranch()!.get().text.slice(1)) : "");
 
   branches = resource({
-    request: () => ({date: this.date()}),
-    loader: async ({request}) => await this.puller.prepareItems(request.date.getDate(), request.date.getMonth() + 1),
+    request: () => ({date: this.date}),
+    loader: async ({request}) =>
+      await this.puller.prepareItems(request.date.getDate(), request.date.getMonth() + 1)
   })
 
   refresh(animate = true, indexBranchChecked: number = this.indexBranch()) {
@@ -93,54 +92,53 @@ export class HomeComponent {
       this.dataStateYear = 'entering';
     }
 
-    setTimeout(() => {
-      if (this.branches.status() !== ResourceStatus.Resolved) return
-      this.indexBranch.set(indexBranchChecked);
-      this.refreshing = false;
-      unblockOverflow();
-    }, transitionTime);
+    if (this.branches.status() !== ResourceStatus.Resolved) return
+    this.indexBranch.set(indexBranchChecked);
+    this.refreshing = false;
+    unblockOverflow();
   }
 
   next() {
-    this.selectedBranch()?.next();
     this.refresh();
+    setTimeout(() => {
+      this.selectedBranch()?.next();
+    }, transitionTime);
   }
-
 
   prev() {
-    this.selectedBranch()?.prev();
     this.refresh();
-  }
-
-  initialization() {
-    if (this.branches.status() !== ResourceStatus.Resolved) return
-    this.indexBranch.set(0);
-    this.refresh();
+    setTimeout(() => {
+      this.selectedBranch()?.prev();
+    }, transitionTime);
   }
 
   checkBranch(mod: number) {
     this.branchChange = 'entering';
     if (this.indexBranch() + mod < 0) {
-      return 2;
+      return this.indexBranch.set(2);
     } else if (this.indexBranch() + mod > 2) {
-      return 0;
+      return this.indexBranch.set(0);
     } else {
-      return this.indexBranch() + mod;
+      return this.indexBranch.update(val => val + mod);
     }
   }
 
   nextBranch() {
-    let indexBranchChecked = this.checkBranch(+1)
-    this.refresh(false, indexBranchChecked);
+    this.refresh(false);
+    setTimeout(() => {
+      this.checkBranch(+1)
+    }, transitionTime);
   }
 
   prevBranch() {
-    let indexBranchChecked = this.checkBranch(-1)
-    this.refresh(false, indexBranchChecked);
+    this.refresh(false);
+    setTimeout(() => {
+      this.checkBranch(-1)
+    }, transitionTime);
   }
 
   formatDate() {
-    return `0${(this.date().getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date().getMonth());
+    return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth());
   }
 
 }

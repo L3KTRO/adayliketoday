@@ -1,5 +1,5 @@
-import {Injectable, resource} from '@angular/core';
-import wiki, {eventResult} from "wikipedia";
+import {Injectable} from '@angular/core';
+import wiki from "wikipedia";
 import {Branch} from './branch';
 
 @Injectable({

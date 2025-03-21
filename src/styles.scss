@@ -26,7 +26,10 @@ html, body {
   font-family: "SF-Pro", sans-serif;
   background-color: $base;
   overflow-x: hidden;
-};
+  -ms-overflow-x: hidden;
+}
+
+;
 
 @font-face {
   font-family: 'SF-Pro-Bold';
@@ -43,65 +46,65 @@ html, body {
 }
 
 .gradient-general {
-    background: linear-gradient(90deg, $third_event 0%, $third_birth 50%, $third_death 100%);
+  background: linear-gradient(90deg, $third_event 0%, $third_birth 50%, $third_death 100%);
 }
 
 .gradient-event {
-    background: linear-gradient(90deg, $first_event 0%, $second_event 50%, $third_event 100%);
+  background: linear-gradient(90deg, $first_event 0%, $second_event 50%, $third_event 100%);
 }
 
 .gradient-birth {
-    background: linear-gradient(90deg, $first_birth 0%, $second_birth 50%, $third_birth 100%);
+  background: linear-gradient(90deg, $first_birth 0%, $second_birth 50%, $third_birth 100%);
 }
 
 .gradient-death {
-    background: linear-gradient(90deg, $first_death 0%, $second_death 50%, $third_death 100%);
+  background: linear-gradient(90deg, $first_death 0%, $second_death 50%, $third_death 100%);
 }
 
 .first-general {
-    color: $first_general;
+  color: $first_general;
 }
 
 .second-general {
-    color: $second_general;
+  color: $second_general;
 }
 
 .third-general {
-    color: $third_general;
+  color: $third_general;
 }
 
 .first-event {
-    color: $first_event;
+  color: $first_event;
 }
 
 .second-event {
-    color: $second_event;
+  color: $second_event;
 }
 
 .third-event {
-    color: $third_event;
+  color: $third_event;
 }
 
 .first-birth {
-    color: $first_birth;
+  color: $first_birth;
 }
 
 .second-birth {
-    color: $second_birth;
+  color: $second_birth;
 }
 
 .third-birth {
-    color: $third_birth;
+  color: $third_birth;
 }
 
 .first-death {
-    color: $first_death;
+  color: $first_death;
 }
 
 .second-death {
-    color: $second_death;
+  color: $second_death;
 }
 
 .third-death {
-    color: $third_death;
+  color: $third_death;
 }
