@@ -1,12 +1,13 @@
 <app-progress-bar *ngIf="branches.status() !== ResourceStatus.Resolved" [status]="branches.status" [@slideInOut]/>
 
-<div class="container" *ngIf="branches.status() === ResourceStatus.Resolved" [@listStagger] [@slideInOut]>
+<div class="container" *ngIf="branches.status() === ResourceStatus.Resolved"
+     [@listStagger] [@slideInOut]>
   <h1 id="title">A day like today</h1>
   <div id="year-controller"></div>
   <div id="branch-controller"></div>
 
   <div *ngIf="branches.status() === ResourceStatus.Resolved" class="container" [@branchChange]="branchChange"
-       (@branchChange.done)="branchChange = 'done'">
+       (@branchChange.done)="branchChange = 'done'; ">
     <div id="container-date-column">
       <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()" [ngClass]="colorBranch().first"></i>
       <div id="container-date-row">
@@ -14,7 +15,7 @@
            [ngClass]="colorBranch().first"></i>
         <h1 id="date" [ngClass]="colorBranch().second">{{ formatDate() }}
           <span id="year" [ngClass]="colorBranch().first" [@dataChange]="dataStateYear"
-                (@dataChange.done)="dataStateYear = 'done'">{{ year() }}
+                (@dataChange.done)="dataStateYear = 'done'; ">{{ year() }}
 </span>
         </h1>
         <i class="fa-solid fa-arrow-right icon-arrow" (click)="nextBranch()"
@@ -27,7 +28,7 @@
 
     <h1 id="concept" [ngClass]="colorBranch().third"> {{ this.selectedBranch()?.concept }} </h1>
     <history-item [text]="text()" [references]="references()" [indexBranch]="indexBranch()" [@dataChange]="dataState"
-                  (@dataChange.done)="dataState = 'done'"></history-item>
+                  (@dataChange.done)="dataState = 'done'; "></history-item>
   </div>
   <app-footer></app-footer>
 </div>

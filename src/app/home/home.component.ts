@@ -1,4 +1,4 @@
-import {Component, computed, inject, resource, ResourceStatus, signal} from '@angular/core';
+import {Component, computed, inject, OnDestroy, OnInit, resource, ResourceStatus, signal} from '@angular/core';
 import {PullerService} from "../puller.service";
 import {animate, query, stagger, style, transition, trigger} from "@angular/animations";
 import {NgClass, NgIf} from "@angular/common";
@@ -11,7 +11,7 @@ import {blockOverflow, getColorByBranch, unblockOverflow} from '../../main';
 import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
 import {FooterComponent} from "../footer/footer.component";
 
-const transitionTime = 250;
+const transitionTime = 300;
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -51,9 +51,17 @@ dayjs.extend(timezone);
         style({opacity: 0, transform: 'translateY(-30px)'}),
         animate(`${transitionTime}ms ease-out`, style({opacity: 1, transform: 'translateY(0px)'}))
       ]),
+      transition('leaving => done', [
+        style({opacity: 0, transform: 'translateY(30px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 1, transform: 'translateY(0px)'}))
+      ]),
       transition('done => entering', [
         style({opacity: 1, transform: 'translateY(0px)'}),
         animate(`${transitionTime}ms ease-out`, style({opacity: 0, transform: 'translateY(30px)'}))
+      ]),
+      transition('done => leaving', [
+        style({opacity: 1, transform: 'translateY(0px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 0, transform: 'translateY(-30px)'}))
       ]),
     ]),
     trigger('branchChange', [
@@ -61,19 +69,27 @@ dayjs.extend(timezone);
         style({opacity: 0, transform: 'translateX(-30px)'}),
         animate(`${transitionTime}ms ease-out`, style({opacity: 1, transform: 'translateX(0px)'}))
       ]),
+      transition('leaving => done', [
+        style({opacity: 0, transform: 'translateX(30px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 1, transform: 'translateX(0px)'}))
+      ]),
       transition('done => entering', [
         style({opacity: 1, transform: 'translateX(0px)'}),
         animate(`${transitionTime}ms ease-out`, style({opacity: 0, transform: 'translateX(30px)'}))
       ]),
-    ])
+      transition('done => leaving', [
+        style({opacity: 1, transform: 'translateX(0px)'}),
+        animate(`${transitionTime}ms ease-out`, style({opacity: 0, transform: 'translateX(-30px)'}))
+      ]),
+    ]),
   ]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit, OnDestroy {
   client_timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-  dataState: 'entering' | 'done' = 'done';
-  dataStateYear: 'entering' | 'done' = 'done';
-  branchChange: 'entering' | 'done' = 'done';
-  refreshing = false;
+  dataState = 'done';
+  dataStateYear = 'done';
+  branchChange = 'done';
+  block = false;
   puller = inject(PullerService)
   date = dayjs().tz(this.client_timezone).toDate();
   indexBranch = signal(0);
@@ -92,64 +108,94 @@ export class HomeComponent {
       await this.puller.prepareItems(request.date.getDate(), request.date.getMonth() + 1)
   })
 
-  refresh(animate = true, indexBranchChecked: number = this.indexBranch()) {
-    if (this.refreshing) return;
-    this.refreshing = true;
+  ngOnInit() {
+    window.addEventListener('keydown', this.onKeydown.bind(this));
+  }
+
+  ngOnDestroy() {
+    window.removeEventListener('keydown', this.onKeydown.bind(this));
+  }
+
+  transition() {
     blockOverflow();
-
-    if (!animate) this.branchChange = 'entering';
-    else {
-      this.dataState = 'entering';
-      this.dataStateYear = 'entering';
-    }
-
-    if (this.branches.status() !== ResourceStatus.Resolved) return
-    this.indexBranch.set(indexBranchChecked);
-    this.refreshing = false;
+    this.block = true;
     unblockOverflow();
   }
 
   next() {
-    this.refresh();
+    if (this.block) return;
+    this.transition();
+    this.dataStateYear = 'leaving';
+    this.dataState = 'leaving'
     setTimeout(() => {
       this.selectedBranch()?.next();
+      this.block = false;
     }, transitionTime);
   }
 
   prev() {
-    this.refresh();
+    if (this.block) return;
+    this.transition();
+    this.dataStateYear = 'entering';
+    this.dataState = 'entering'
     setTimeout(() => {
       this.selectedBranch()?.prev();
+      this.block = false;
     }, transitionTime);
   }
 
-  checkBranch(mod: number) {
-    this.branchChange = 'entering';
-    if (this.indexBranch() + mod < 0) {
-      return this.indexBranch.set(2);
-    } else if (this.indexBranch() + mod > 2) {
-      return this.indexBranch.set(0);
-    } else {
-      return this.indexBranch.update(val => val + mod);
-    }
-  }
-
   nextBranch() {
-    this.refresh(false);
+    if (this.block) return;
+    this.transition();
+    this.branchChange = 'entering';
     setTimeout(() => {
       this.checkBranch(+1)
+      this.block = false;
     }, transitionTime);
   }
 
   prevBranch() {
-    this.refresh(false);
+    if (this.block) return;
+    this.transition();
+    this.branchChange = 'leaving';
     setTimeout(() => {
       this.checkBranch(-1)
+      this.block = false;
     }, transitionTime);
+  }
+
+  checkBranch(mod: number) {
+    const supossedBranch = this.indexBranch() + mod;
+    if (supossedBranch < 0) {
+      return this.indexBranch.set(2);
+    } else if (supossedBranch > 2) {
+      return this.indexBranch.set(0);
+    } else {
+      return this.indexBranch.set(supossedBranch);
+    }
   }
 
   formatDate() {
     return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth());
+  }
+
+  onKeydown(event: KeyboardEvent) {
+    switch (event.key) {
+      case 'ArrowUp':
+        this.next();
+        break;
+      case 'ArrowDown':
+        this.prev();
+        break;
+      case 'ArrowLeft':
+        this.prevBranch();
+        break;
+      case 'ArrowRight':
+        this.nextBranch();
+        break;
+      default:
+        return;
+    }
   }
 
   protected readonly ResourceStatus = ResourceStatus;
