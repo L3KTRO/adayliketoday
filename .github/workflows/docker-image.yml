@@ -38,6 +38,6 @@ jobs:
       - name: Update to portainer
         uses: fjogeleit/http-request-action@v1
         with:
-          url:  ${{ secrets.PORTAINER_UPDATE }}
+          url: ${{ secrets.PORTAINER_UPDATE }}
           method: 'POST'
           preventFailureOnNoResponse: "true"
