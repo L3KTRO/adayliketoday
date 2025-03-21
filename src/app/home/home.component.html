@@ -9,7 +9,7 @@
   <div *ngIf="branches.status() === ResourceStatus.Resolved" class="container" [@branchChange]="branchChange"
        (@branchChange.done)="branchChange = 'done'; ">
     <div id="container-date-column">
-      <i class="fa-solid fa-arrow-up icon-arrow" (click)="prev()" [ngClass]="colorBranch().first"></i>
+      <i class="fa-solid fa-arrow-up icon-arrow" (click)="next()" [ngClass]="colorBranch().first"></i>
       <div id="container-date-row">
         <i class="fa-solid fa-arrow-left icon-arrow" (click)="prevBranch()"
            [ngClass]="colorBranch().first"></i>
@@ -21,7 +21,7 @@
         <i class="fa-solid fa-arrow-right icon-arrow" (click)="nextBranch()"
            [ngClass]="colorBranch().first"></i>
       </div>
-      <i class="fa-solid fa-arrow-down icon-arrow" (click)="next()"
+      <i class="fa-solid fa-arrow-down icon-arrow" (click)="prev()"
          [ngClass]="colorBranch().first"></i>
     </div>
 
