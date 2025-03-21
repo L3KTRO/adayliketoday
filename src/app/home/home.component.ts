@@ -9,6 +9,7 @@ import {wikiSummary} from "wikipedia/dist/resultTypes";
 import {ItemComponent} from '../item/item.component';
 import {blockOverflow, getColorByBranch, unblockOverflow} from '../../main';
 import {FooterComponent} from "../footer/footer.component";
+import {ProgressBarComponent} from "../progress-bar/progress-bar.component";
 
 const transitionTime = 250;
 
@@ -21,17 +22,27 @@ dayjs.extend(timezone);
     ItemComponent,
     NgClass,
     NgIf,
-    FooterComponent
+    FooterComponent,
+    ProgressBarComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   standalone: true,
   animations: [
+    trigger('slideInOut', [
+      transition(':enter', [
+        style({transform: 'translateY(-100%)', opacity: 0}), // Inicio fuera de la vista
+        animate('500ms ease-out', style({transform: 'translateY(0)', opacity: 1})) // Transición hacia dentro
+      ]),
+      transition(':leave', [
+        animate('500ms 400ms ease-in', style({transform: 'translateY(100%)', opacity: 0})) // Transición hacia fuera
+      ])
+    ]),
     trigger('listStagger', [
       transition('* <=> *', [
         query('*', [
           style({opacity: 0, transform: 'translateY(-35px)'}),
-          stagger('100ms', animate('250ms ease-out', style({opacity: 1, transform: 'translateY(0px)'})))
+          stagger('100ms', animate('250ms 1s ease-out', style({opacity: 1, transform: 'translateY(0px)'})))
         ])
       ])
     ]),
@@ -141,4 +152,5 @@ export class HomeComponent {
     return `0${(this.date.getDate())}`.slice(-2) + " de " + this.puller.getWritedMonth(this.date.getMonth());
   }
 
+  protected readonly ResourceStatus = ResourceStatus;
 }

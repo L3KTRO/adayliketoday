@@ -1,10 +1,6 @@
-import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
-import { first } from 'rxjs';
-
-export var load = false;
-
+import {bootstrapApplication} from '@angular/platform-browser';
+import {appConfig} from './app/app.config';
+import {AppComponent} from './app/app.component';
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
@@ -25,6 +21,7 @@ interface combinationsColor {
   third: string,
   gradient: string
 };
+
 export function getColorByBranch(branchIndex: number): combinationsColor {
   let first_general = "first-general";
   let second_general = "second-general";

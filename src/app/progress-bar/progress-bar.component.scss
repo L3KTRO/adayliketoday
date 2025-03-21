@@ -1,0 +1,25 @@
+.progress-container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  height: 20px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  margin: 20rem auto 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50; /* Color verde */
+  transition: width 0.5s ease; /* Animación suave */
+}
+
+.progress-text {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+  color: white;
+}
