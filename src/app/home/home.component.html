@@ -5,7 +5,6 @@
   <h1 id="title">A day like today</h1>
   <div id="year-controller"></div>
   <div id="branch-controller"></div>
-
   <div *ngIf="branches.status() === ResourceStatus.Resolved" class="container" [@branchChange]="branchChange"
        (@branchChange.done)="branchChange = 'done'; ">
     <div id="container-date-column">

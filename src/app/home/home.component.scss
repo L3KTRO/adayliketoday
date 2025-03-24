@@ -72,6 +72,32 @@ body {
 
 @media (max-width: 600px) {
   #title {
+    font-size: 2.5rem;
+  }
+  #year {
     font-size: 2rem;
+  }
+
+  #date {
+    font-size: 1.75rem;
+  }
+}
+
+
+@media (max-width: 375px) {
+  #year {
+    font-size: 1.75rem;
+  }
+
+  #date {
+    font-size: 1.25rem;
+  }
+
+  #container-date-column > .icon-arrow {
+    padding: 0.5rem 1rem;
+  }
+
+  #container-date-row > .icon-arrow {
+    padding: 1rem 0.75rem;
   }
 }

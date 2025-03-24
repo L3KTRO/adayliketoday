@@ -1,8 +1,8 @@
-import { Component, Inject, Input } from '@angular/core';
-import { NgClass, NgForOf } from "@angular/common";
-import { LinkComponent } from '../link/link.component';
-import { wikiSummary } from "wikipedia/dist/resultTypes";
-import { getColorByBranch } from '../../main';
+import {Component, Input} from '@angular/core';
+import {NgClass, NgForOf} from "@angular/common";
+import {LinkComponent} from '../link/link.component';
+import {wikiSummary} from "wikipedia/dist/resultTypes";
+import {getColorByBranch} from '../../main';
 
 @Component({
   selector: 'history-item',

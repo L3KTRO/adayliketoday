@@ -47,3 +47,13 @@ body {
 #links > #link {
   flex: 30%;
 }
+
+@media (max-width: 600px) {
+  #text {
+    margin: 1rem 10%;
+  }
+
+  #links {
+    margin: 1rem 10%;
+  }
+}

@@ -8,10 +8,16 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
 }
 
 .container-footer-child {
   text-align: center;
-  width: 50%;
-  padding: 0 5rem;
+  padding: 0 1rem;
+}
+
+@media (max-witdh: 500px) {
+  .container-footer-child {
+    padding: 0 1%;
+  }
 }
